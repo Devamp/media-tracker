@@ -7,11 +7,11 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon, HomeIcon, MusicalNoteIcon } from "@heroicons/react/24/outline";
 
 const navigation = [
-  { name: "Home", href: "#", current: true },
-  { name: "My Log", href: "#", current: false },
+  { name: "Home", href: "#", current: true, icon: <HomeIcon className="size-6" /> },
+  { name: "My Log", href: "#", current: false, icon: <MusicalNoteIcon className="size-6" /> },
 ];
 
 function classNames(...classes) {
@@ -20,7 +20,7 @@ function classNames(...classes) {
 
 export default function Example() {
   return (
-    <Disclosure as="nav" className="bg-cyan-600">
+    <Disclosure as="nav" className="bg-stone-100">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -61,10 +61,10 @@ export default function Example() {
                       item.current
                         ? "bg-gray-900 text-white"
                         : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "rounded-md px-3 py-2 text-sm font-medium"
+                      "rounded-full px-3 py-2 text-sm font-medium"
                     )}
                   >
-                    {item.name}
+                    {item.icon ? item.icon : <span>{item.name}</span>}
                   </a>
                 ))}
               </div>
@@ -76,7 +76,7 @@ export default function Example() {
             <input
               type="text"
               placeholder="Search for Songs, Podcasts, Audiobooks..."
-              className="w-96 min-w-48 bg-white text-gray-700 border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400"
+              className="w-96 min-w-48 bg-white text-gray-700 border border-gray-300 rounded-full px-3 py-1 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400"
             />
           </div>
 
@@ -84,7 +84,7 @@ export default function Example() {
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <button
               type="button"
-              className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
+              className="relative rounded-xl bg-cyan-600 p-1 text-white hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
             >
               <span className="absolute -inset-1.5" />
               <p>+ Log</p>
