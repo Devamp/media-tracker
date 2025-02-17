@@ -27,6 +27,8 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [doPasswordsMatch, setDoPasswordsMatch] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccessful, setIsSuccessful] = useState(false);
+  const [isDuplicate, setIsDuplicate] = useState(false);
 
   // verify if passwords match
   const confirmPasswordMatch = (event) => {
@@ -58,12 +60,24 @@ export default function SignUp() {
 
       if (res.ok) {
         setTimeout(() => {
+          setIsSuccessful(true);
           setIsLoading(false);
         }, 1500);
       } else {
+        if (res.status === 401) {
+          setIsDuplicate(true);
+        }
+        setIsLoading(false);
         console.log("Something went wrong.");
       }
+
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      setDoPasswordsMatch(true);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -80,6 +94,7 @@ export default function SignUp() {
           className="w-full max-w-md flex flex-col items-center"
           onSubmit={handleSignup}
           method="POST"
+          id="sign-up-form"
         >
           <div className="flex flex-row items-center w-full p-2 rounded-md">
             <User className="mr-2 text-black" size={28} />
@@ -139,6 +154,17 @@ export default function SignUp() {
           {!doPasswordsMatch && (
             <p className="text-red-600 p-2">Your passwords do not match.</p>
           )}
+          {isSuccessful && (
+            <p className="text-green-600 p-2">
+              Your account has been registered. Please log in!
+            </p>
+          )}
+          {isDuplicate && (
+            <p className="text-red-600 p-2">
+              An account with this email already exists. Please log in.
+            </p>
+          )}
+
           <button
             type="submit"
             className={`bg-blue-400 w-1/2 p-2 rounded-md text-white hover:bg-blue-500 transition-colors ${

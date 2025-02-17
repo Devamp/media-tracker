@@ -36,6 +36,7 @@ const LoginBody = ({ setWasLoginSuccessful }) => {
 
       setTimeout(() => {
         if (res.ok) {
+          setWasLoginSuccessful(true);
           router.push("/main-menu");
         } else {
           setWasLoginSuccessful(false);
