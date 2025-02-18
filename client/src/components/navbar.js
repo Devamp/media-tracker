@@ -52,9 +52,11 @@ export default function NavBar() {
           {/* Profile Dropdown */}
           <div>
             <MenuButton className="relative flex rounded-full bg-gray-800 text-sm">
-              <img
+              <Image
                 alt="Profile Picture"
-                src="https://static.scientificamerican.com/sciam/cache/file/2AE14CDD-1265-470C-9B15F49024186C10_source.jpg?w=1200"
+                src="/TemporaryPFP.PNG"
+                width={40}
+                height={40}
                 className="size-10 rounded-full"
               />
             </MenuButton>
