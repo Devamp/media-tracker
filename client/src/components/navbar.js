@@ -49,8 +49,9 @@ export default function NavBar() {
         </button>
 
         <Menu as="div" className="relative ml-3">
+          {/* Profile Dropdown */}
           <div>
-            <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
+            <MenuButton className="relative flex rounded-full bg-gray-800 text-sm">
               <img
                 alt="Profile Picture"
                 src="https://static.scientificamerican.com/sciam/cache/file/2AE14CDD-1265-470C-9B15F49024186C10_source.jpg?w=1200"
@@ -58,6 +59,8 @@ export default function NavBar() {
               />
             </MenuButton>
           </div>
+
+          {/* Dropdown Items */}
           <MenuItems
             transition
             className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
