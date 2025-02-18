@@ -84,7 +84,7 @@ export default function SignUp() {
 
   return (
     <div className="flex w-full h-screen">
-      <div className="flex flex-col items-center w-1/2 bg-stone-300 py-10 rounded-xl">
+      <div className="flex flex-col items-center w-1/2 bg-stone-300 py-10 rounded-xl shadow-md shadow-black">
         <LogoHeader />
         <div className="flex justify-start p-3">
           <h2 className="text-xl font-bold">Sign Up</h2>
@@ -167,7 +167,7 @@ export default function SignUp() {
 
           <button
             type="submit"
-            className={`bg-blue-400 w-1/2 p-2 rounded-md text-white hover:bg-blue-500 transition-colors ${
+            className={`bg-[#2d5c7c] w-1/2 p-2 rounded-md text-white hover:hover:bg-[#356a8e] transition-colors hover:scale-105 ${
               isLoading ? "bg-gray-400 cursor-not-allowed" : ""
             }`}
             disabled={isLoading || !doPasswordsMatch}
@@ -184,20 +184,20 @@ export default function SignUp() {
         </form>
 
         <hr className="w-3/5 mt-10 mb-5 border-t-2 border-white" />
-        <h3 className="font-bold">
+        <h3 className="font-bold text-[#2d5c7c]">
           Already have an account?{" "}
           <span className="font-bold hover:underline">
             <Link href="/login">Log In</Link>
           </span>
         </h3>
       </div>
-      <div className="w-3/5 flex-shrink-0 flex-col items-center justify-end">
+      <div className="w-3/5 flex-shrink-0 flex-col items-center justify-center ">
         <div className="m-10 mb-32">
           <p className="text-white text-6xl font-bold mt-14">
             Discover and Personalize<br></br> Your Entertainment Journey.
           </p>
         </div>
-        <div className="bg-white border rounded-xl w-3/4 p-8">
+        <div className="ml-20 bg-white border rounded-xl w-3/4 p-8 shadow-md shadow-black">
           <p className="text-black font-bold text-2xl ">
             What entertains you the most?
           </p>

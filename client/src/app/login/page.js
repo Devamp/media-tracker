@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-// LoginBody component receives wasLoginSuccessful and setWasLoginSuccessful as props
 const LoginBody = ({ setWasLoginSuccessful }) => {
   const [isLoading, setIsLoading] = useState(false); // state to hold login processing
   const router = useRouter();
@@ -37,7 +36,7 @@ const LoginBody = ({ setWasLoginSuccessful }) => {
       setTimeout(() => {
         if (res.ok) {
           setWasLoginSuccessful(true);
-          router.push("/main-menu");
+          router.push("/home");
         } else {
           setWasLoginSuccessful(false);
           console.log("Something went wrong.");
@@ -79,8 +78,8 @@ const LoginBody = ({ setWasLoginSuccessful }) => {
 
       <button
         type="submit"
-        className={`bg-blue-400 w-1/2 p-2 rounded-md text-white transition-colors ${
-          isLoading ? "bg-gray-400 cursor-not-allowed" : "hover:bg-blue-500"
+        className={`bg-[#2d5c7c] w-1/2 p-2 rounded-md text-white transition-colors hover:scale-105 ${
+          isLoading ? "bg-gray-400 cursor-not-allowed" : "hover:bg-[#356a8e]"
         }`}
         disabled={isLoading}
       >
@@ -116,7 +115,7 @@ export default function Login() {
   const [wasLoginSuccessful, setWasLoginSuccessful] = useState(true);
 
   return (
-    <div className="m-auto flex flex-col justify-center items-center mt-28 bg-stone-300 py-10 w-2/5 border rounded-lg">
+    <div className="m-auto flex flex-col justify-center items-center mt-28 bg-stone-300 py-10 w-2/5 border rounded-lg shadow-md shadow-black">
       <LogoHeader />
       <div className="flex justify-center p-3">
         <h2 className="text-xl font-bold">Log in</h2>
@@ -131,7 +130,7 @@ export default function Login() {
       )}
 
       <hr className="w-3/5 mt-10 mb-5 border-t-2 border-white" />
-      <h3 className="font-bold">
+      <h3 className="font-bold text-[#2d5c7c]">
         Don't have an account?{" "}
         <span className="font-bold hover:underline">
           <Link href="/signup">Sign Up</Link>
