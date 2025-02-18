@@ -5,18 +5,16 @@ const category = ["All", "Music", "Podcasts", "Audiobooks"];
 
 export default function Home() {
   return (
-    <div className="bg-white">
+    <div className="bg-stone-300 min-h-screen">
       {/* Navbar */}
-      <div>
         <NavBar />
-      </div>
 
       {/* Category Buttons */}
-      <div className="bg-cyan-600 p-4 flex space-x-4">
+      <div className="bg-[#2d5c7c] p-4 flex space-x-4">
         {category.map((category) => (
           <button
             key={category}
-            className="bg-gray-200 px-4 py-2 rounded-full font-medium"
+            className="bg-[#60849b] text-white px-4 py-2 rounded-full font-medium"
           >
             {category}
           </button>
@@ -24,7 +22,7 @@ export default function Home() {
       </div>
 
       {/* Content Grid */}
-      <div className="bg-cyan-600 p-6 grid grid-cols-3 gap-4">
+      <div className="bg-[#2d5c7c] p-6 grid grid-cols-3 gap-4">
         {Array(6)
           .fill()
           .map((_, index) => (
@@ -33,16 +31,16 @@ export default function Home() {
       </div>
 
       {/* Made for You Section */}
-      <div className="bg-gray-200 p-6">
+      <div className="bg-stone-300 p-6">
         <div className="flex justify-between items-center">
-          <h2 className="text-lg font-bold">Made for You</h2>
-          <button className="text-cyan-600 font-medium">See All</button>
+          <h2 className="text-[#2d5c7c] text-lg font-bold">Made for You</h2>
+          <button className="text-[#2d5c7c] font-medium">See All</button>
         </div>
         <div className="grid grid-cols-4 gap-4 mt-4">
           {Array(4)
             .fill()
             .map((_, index) => (
-              <div key={index} className="bg-cyan-600 h-32 rounded-lg"></div>
+              <div key={index} className="bg-[#2d5c7c] h-32 rounded-lg"></div>
             ))}
         </div>
       </div>
