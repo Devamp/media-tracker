@@ -23,7 +23,7 @@ export default function NavBar() {
   return (
     <nav className="bg-stone-300 p-4 pl-10 pr-10 flex items-center justify-between rounded-xl">
       {/* Navigation Links */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-12">
         <Image alt="Logo" src="/TrackifyLogo.PNG" width={50} height={50} />
         {navigation.map((item) => (
           <a key={item.name} href={item.href} className="size-6">
@@ -33,7 +33,7 @@ export default function NavBar() {
       </div>
 
       {/* Search Bar */}
-      <div className="relative flex items-center w-1/3">
+      <div className="relative flex items-center w-2/3">
         <MagnifyingGlassIcon className="absolute left-3 size-5 text-gray-500" />
         <input
           type="text"
@@ -43,7 +43,7 @@ export default function NavBar() {
       </div>
 
       {/* Profile & + Log Button */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-12">
         <button className="bg-[#2d5c7c] text-white px-4 py-2 rounded-xl font-bold">
           + Log
         </button>
