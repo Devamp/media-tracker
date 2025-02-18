@@ -5,12 +5,12 @@ const category = ["All", "Music", "Podcasts", "Audiobooks"];
 
 export default function Home() {
   return (
-    <div className="bg-stone-300 min-h-screen">
+    <div className="bg-white min-h-screen">
       {/* Navbar */}
         <NavBar />
 
       {/* Category Buttons */}
-      <div className="bg-[#2d5c7c] p-4 flex space-x-4">
+      <div className="bg-[#2d5c7c] pl-12 p-8 flex space-x-4">
         {category.map((category) => (
           <button
             key={category}
@@ -22,18 +22,18 @@ export default function Home() {
       </div>
 
       {/* Content Grid */}
-      <div className="bg-[#2d5c7c] p-6 grid grid-cols-3 gap-4">
+      <div className="bg-[#2d5c7c] p-12 pt-0 grid grid-cols-3 gap-x-12 gap-y-6">
         {Array(6)
           .fill()
           .map((_, index) => (
-            <div key={index} className="bg-gray-300 h-20 rounded-lg"></div>
+            <div key={index} className="bg-white h-20 rounded-lg"></div>
           ))}
       </div>
 
       {/* Made for You Section */}
-      <div className="bg-stone-300 p-6">
+      <div className="bg-white p-12 pt-5">
         <div className="flex justify-between items-center">
-          <h2 className="text-[#2d5c7c] text-lg font-bold">Made for You</h2>
+          <h2 className="text-[#2d5c7c] text-2xl font-bold">Made for You</h2>
           <button className="text-[#2d5c7c] font-medium">See All</button>
         </div>
         <div className="grid grid-cols-4 gap-4 mt-4">
