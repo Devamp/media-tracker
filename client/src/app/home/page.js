@@ -5,7 +5,7 @@ const category = ["All", "Music", "Podcasts", "Audiobooks"];
 
 export default function Home() {
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-[#2d5c7c] min-h-screen">
       {/* Navbar */}
         <NavBar />
 
