@@ -1,10 +1,10 @@
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
-
 import {
   HomeIcon,
   MusicalNoteIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 const navigation = [
   {
@@ -24,11 +24,7 @@ export default function NavBar() {
     <nav className="bg-stone-300 p-4 flex items-center justify-between">
       {/* Navigation Links */}
       <div className="flex items-center space-x-4">
-        <img
-          alt="Logo"
-          src="/TrackifyLogo.PNG"
-          className="h-10 w-auto"
-        />
+        <Image alt="Logo" src="/TrackifyLogo.PNG" width={50} height={50} />
         {navigation.map((item) => (
           <a key={item.name} href={item.href} className="size-6">
             {item.icon}
