@@ -21,7 +21,7 @@ const navigation = [
 
 export default function NavBar() {
   return (
-    <nav className="bg-stone-300 p-4 flex items-center justify-between">
+    <nav className="bg-stone-300 p-4 pl-10 pr-10 flex items-center justify-between rounded-xl">
       {/* Navigation Links */}
       <div className="flex items-center space-x-4">
         <Image alt="Logo" src="/TrackifyLogo.PNG" width={50} height={50} />
