@@ -48,10 +48,8 @@ export default function Home() {
       <div className="bg-white p-12 pt-5">
         <div className="flex justify-between items-center">
           <h2 className="text-[#2d5c7c] text-2xl font-bold">Made for You</h2>
-          <button className="text-[#2d5c7c] font-medium hover:underline">
-            See All
-          </button>
         </div>
+        
         <div className="grid grid-cols-4 gap-4 mt-4">
           {Array(4)
             .fill()
