@@ -5,6 +5,7 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import Link from "next/link";
 
 const navigation = [
   {
@@ -69,12 +70,9 @@ export default function NavBar() {
             className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
           >
             <MenuItem>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
-              >
-                Logout
-              </a>
+              <span className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden">
+                <Link href="/login">Logout</Link>
+              </span>
             </MenuItem>
           </MenuItems>
         </Menu>
