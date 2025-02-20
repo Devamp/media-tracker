@@ -21,8 +21,8 @@ export default function Home() {
             key={category}
             className={`px-4 py-2 rounded-full font-medium ${
               selectedCategory === category
-                ? "bg-white text-[#2d5c7c]"                       // Active Button
-                : "bg-[#60849b] text-white hover:bg-[#27506c]"    // Default Button
+                ? "bg-white text-[#2d5c7c]" // Active Button
+                : "bg-[#60849b] text-white hover:bg-[#27506c]" // Default Button
             } `}
             onClick={() => setSelectedCategory(category)} // Update the state on click to selected category
           >
@@ -49,7 +49,6 @@ export default function Home() {
         <div className="flex justify-between items-center">
           <h2 className="text-[#2d5c7c] text-2xl font-bold">Made for You</h2>
         </div>
-        
         <div className="grid grid-cols-4 gap-4 mt-4">
           {Array(4)
             .fill()
