@@ -21,7 +21,7 @@ const navigation = [
 
 export default function NavBar() {
   return (
-    <nav className="bg-stone-300 p-4 pl-10 pr-10 flex items-center justify-between rounded-xl">
+    <nav className="bg-stone-300 p-4 pl-10 pr-10 flex items-center justify-between rounded-xl fixed top-0 left-0 w-full z-50">
       {/* Navigation Links */}
       <div className="flex items-center space-x-12">
         <Image alt="Logo" src="/TrackifyLogo.PNG" width={50} height={50} />
@@ -39,6 +39,7 @@ export default function NavBar() {
           type="text"
           placeholder="Search for Songs, Podcasts, Audiobooks..."
           className="w-full p-2 pl-10 rounded-full bg-gray-100 text-sm focus:outline-none"
+          aria-label="Search bar for Songs, Podcasts, and Audiobooks"
         />
       </div>
 
