@@ -1,10 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function AudiobookPref() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [selected, setSelected] = useState([]);
+  const [musicPreferences, setMusicPreferences] = useState([]);
 
   const genres = [
     "Fiction",
@@ -25,7 +28,14 @@ export default function AudiobookPref() {
     "Health & Wellness",
   ];
 
-  const [selected, setSelected] = useState([]);
+  useEffect(() => {
+    // Retrieve music preferences from query params
+    if (searchParams.has("musicPreferences")) {
+      setMusicPreferences(
+        JSON.parse(decodeURIComponent(searchParams.get("musicPreferences")))
+      );
+    }
+  }, [searchParams]);
 
   const toggleSelection = (genre) => {
     if (selected.includes(genre)) {
@@ -37,7 +47,11 @@ export default function AudiobookPref() {
 
   const handleNext = () => {
     if (selected.length === 4) {
-      router.push("/onboarding/podcast");
+      router.push(
+        `/onboarding/podcast?musicPreferences=${encodeURIComponent(
+          JSON.stringify(musicPreferences)
+        )}&audiobookPreferences=${encodeURIComponent(JSON.stringify(selected))}`
+      );
     }
   };
 

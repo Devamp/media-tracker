@@ -1,7 +1,16 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function PodcastInterests() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [selected, setSelected] = useState([]);
+  const [musicPreferences, setMusicPreferences] = useState([]);
+  const [audiobookPreferences, setAudiobookPreferences] = useState([]);
+  const [showConfirmation, setShowConfirmation] = useState(false); // Modal state
+
   const genres = [
     "Technology",
     "Business",
@@ -21,7 +30,18 @@ export default function PodcastInterests() {
     "Spirituality",
   ];
 
-  const [selected, setSelected] = useState([]);
+  useEffect(() => {
+    if (searchParams.has("musicPreferences")) {
+      setMusicPreferences(
+        JSON.parse(decodeURIComponent(searchParams.get("musicPreferences")))
+      );
+    }
+    if (searchParams.has("audiobookPreferences")) {
+      setAudiobookPreferences(
+        JSON.parse(decodeURIComponent(searchParams.get("audiobookPreferences")))
+      );
+    }
+  }, [searchParams]);
 
   const toggleSelection = (genre) => {
     if (selected.includes(genre)) {
@@ -31,18 +51,43 @@ export default function PodcastInterests() {
     }
   };
 
+  const handleSubmit = () => {
+    if (selected.length === 4) {
+      setShowConfirmation(true); // Show modal before navigating
+    }
+  };
+
+  const confirmAndNavigate = () => {
+    const userPreferences = {
+      musicPreferences,
+      audiobookPreferences,
+      podcastPreferences: selected,
+    };
+
+    fetch("/api/submit-preferences", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userPreferences),
+    })
+      .then(() => {
+        router.push("/dashboard"); // Redirect after submission
+      })
+      .catch((error) => console.error("Error submitting preferences:", error));
+  };
+
   return (
     <div className="flex flex-col w-full min-h-screen bg-white p-6">
       <div className="text-center w-full mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 flex items-center justify-center">
+        <h2 className="text-3xl font-bold text-gray-900">
           Podcast Interests 🎧
         </h2>
-        <p className="text-gray-600 text-lg text-center">
+        <p className="text-gray-600 text-lg">
           Let's find podcasts that match your interests!
         </p>
       </div>
 
-      {}
       <div className="w-full flex justify-center">
         <div className="grid grid-cols-4 gap-4 w-3/4">
           {genres.map((genre) => (
@@ -64,7 +109,6 @@ export default function PodcastInterests() {
         </div>
       </div>
 
-      {}
       <div className="w-full flex justify-center mt-6">
         <button
           className={`px-8 py-3 rounded-lg text-lg font-semibold transition border-2 border-[#145D7E] ${
@@ -73,11 +117,35 @@ export default function PodcastInterests() {
               : "bg-[#E9E1E4] text-gray-500 cursor-not-allowed"
           }`}
           disabled={selected.length !== 4}
-          onClick={() => alert(`Selected Interests: ${selected.join(", ")}`)}
+          onClick={handleSubmit}
         >
           Next
         </button>
       </div>
+
+      {/* Confirmation Modal */}
+      {showConfirmation && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg text-center w-1/3">
+            <h3 className="text-xl font-semibold">Selected Interests:</h3>
+
+            {/* Combined Preferences Box */}
+            <div className="mt-2 text-gray-700 text-lg border border-gray-300 rounded-lg p-4 bg-gray-100 text-left max-h-40 overflow-y-auto">
+              <strong>🎵 Music:</strong> {musicPreferences.join(", ")} <br />
+              <strong>📚 Audiobooks:</strong> {audiobookPreferences.join(", ")}{" "}
+              <br />
+              <strong>🎧 Podcasts:</strong> {selected.join(", ")}
+            </div>
+
+            <button
+              className="mt-6 px-6 py-2 bg-[#145D7E] text-white rounded-lg w-full text-lg font-semibold"
+              onClick={confirmAndNavigate}
+            >
+              Confirm & Continue
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

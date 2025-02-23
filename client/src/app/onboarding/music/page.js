@@ -37,7 +37,11 @@ export default function MusicPref() {
 
   const handleNext = () => {
     if (selected.length === 4) {
-      router.push("/onboarding/audiobook");
+      router.push(
+        `/onboarding/audiobook?musicPreferences=${encodeURIComponent(
+          JSON.stringify(selected)
+        )}`
+      );
     }
   };
 
