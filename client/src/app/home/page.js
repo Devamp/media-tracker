@@ -1,5 +1,6 @@
 "use client";
 
+import MadeForYou from "@/components/madeforyou";
 import NavBar from "@/components/navbar";
 import { useState } from "react";
 
@@ -45,18 +46,7 @@ export default function Home() {
       </div>
 
       {/* Made for You Section */}
-      <div className="bg-white p-12 pt-5">
-        <div className="flex justify-between items-center">
-          <h2 className="text-[#2d5c7c] text-2xl font-bold">Made for You</h2>
-        </div>
-        <div className="grid grid-cols-4 gap-4 mt-4">
-          {Array(4)
-            .fill()
-            .map((_, index) => (
-              <div key={index} className="bg-[#2d5c7c] h-32 rounded-lg"></div>
-            ))}
-        </div>
-      </div>
+      <MadeForYou items={new Array(10).fill({})}/>
     </div>
   );
 }
