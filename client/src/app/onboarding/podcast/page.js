@@ -72,7 +72,7 @@ export default function PodcastInterests() {
       body: JSON.stringify(userPreferences),
     })
       .then(() => {
-        router.push("/dashboard"); // Redirect after submission
+        router.push("/home"); // Redirect after submission
       })
       .catch((error) => console.error("Error submitting preferences:", error));
   };
