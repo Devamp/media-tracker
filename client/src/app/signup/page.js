@@ -4,6 +4,7 @@ import { Mail, Key, User } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const LogoHeader = () => {
   return (
@@ -29,6 +30,7 @@ export default function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [isDuplicate, setIsDuplicate] = useState(false);
+  const router = useRouter();
 
   // verify if passwords match
   const confirmPasswordMatch = (event) => {
@@ -61,7 +63,8 @@ export default function SignUp() {
       if (res.ok) {
         setTimeout(() => {
           setIsSuccessful(true);
-          setIsLoading(false);
+          setIsLoading(false);          
+          router.push("/onboarding"); // once a new user is registered, route them to onboarding
         }, 1500);
       } else {
         if (res.status === 401) {
