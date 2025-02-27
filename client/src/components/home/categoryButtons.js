@@ -1,6 +1,6 @@
 export default function CategoryButtons( {category, selectedCategory, setSelectedCategory}) {
   return (
-    <div className="bg-[#2d5c7c] pl-12 p-8 flex space-x-4">
+    <div className="bg-[#2d5c7c] pl-12 pt-28 p-8 flex space-x-4">
       {category.map((cat) => (
         <button
           key={cat}
