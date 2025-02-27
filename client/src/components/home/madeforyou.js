@@ -116,14 +116,14 @@ const MadeForYou = () => {
             .map((item, index) => (
               <div
                 key={item.id}
-                className="bg-[#2d5c7c] h-32 p-6 rounded-lg flex items-center"
+                className="bg-[#2d5c7c] h-32 pl-0 p-6 rounded-lg flex items-center"
               >
                 <img
                   src={item.img}
                   alt={item.name}
-                  className="w-16 h-16 rounded-md"
+                  className="w-32 h-32 rounded-md"
                 />
-                <h3 className="pl-4 text-white text-left text-base break-words font-bold mt-2">
+                <h3 className="pl-4 text-white text-left text-sm break-words font-bold mt-2">
                   {item.name}
                 </h3>
               </div>

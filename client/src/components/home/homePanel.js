@@ -76,7 +76,7 @@ export default function HomePanel() {
                 <img
                   src={item.img}
                   alt={item.name}
-                  className="bg-gray-300 rounded-full w-14 h-14"
+                  className="rounded-full w-14 h-14"
                 />
                 <h3 className="text-white mt-1">{item.name}</h3>
               </div>
@@ -90,12 +90,12 @@ export default function HomePanel() {
           {podcasts.map((item) => (
             <div
               key={item.id}
-              className="flex items-center bg-white px-3 py-2 rounded-lg mb-3 w-4/5 mx-auto"
+              className="flex items-center bg-white pl-0 px-3 py-2 rounded-lg mb-3 w-4/5 h-14 mx-auto"
             >
               <img
                 src={item.img}
                 alt={item.name}
-                className="w-10 h-10 bg-gray-200 rounded"
+                className="w-14 h-14 rounded"
               />
               <h3 className="pl-4">{item.name}</h3>
             </div>
@@ -109,12 +109,12 @@ export default function HomePanel() {
         {audiobooks.map((item) => (
           <div
             key={item.id}
-            className="bg-white p-3 rounded-lg mb-3 flex items-center"
+            className="bg-white h-20 pl-0 p-3 rounded-lg mb-3 flex items-center"
           >
             <img
               src={item.img}
               alt={item.name}
-              className="w-14 h-14 bg-gray-200 rounded"
+              className="w-20 h-20 rounded"
             />
             <h3 className="pl-4 text-left break-words">{item.name}</h3>
           </div>

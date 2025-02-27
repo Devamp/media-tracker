@@ -116,14 +116,14 @@ export default function ContentGrid({ selectedCategory }) {
         categoryData.map((item) => (
           <div
             key={item.id}
-            className="bg-white rounded-lg p-4 flex flex-col items-center"
+            className="bg-white rounded-lg h-28 pl-0 p-4 flex items-center"
           >
             <img
               src={item.img}
               alt={item.name}
-              className="w-20 h-20 rounded-lg"
+              className="w-28 h-28 rounded-lg"
             />
-            <h3 className="font-medium flex justify-center">{item.name}</h3>
+            <h3 className="font-medium flex justify-center pl-4">{item.name}</h3>
           </div>
         ))
       ) : (
