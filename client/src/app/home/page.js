@@ -7,13 +7,13 @@ import { useState } from "react";
 // Category Buttons
 const category = ["All", "Music", "Podcasts", "Audiobooks"];
 
-export default function Home() {
+export default function Home({ user }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   return (
     <div className="bg-[#2d5c7c] min-h-screen">
       {/* Navbar */}
-      <NavBar />
+      <NavBar user={user} />
 
       {/* Category Buttons */}
       <div className="bg-[#2d5c7c] pl-12 p-8 flex space-x-4">
@@ -46,7 +46,7 @@ export default function Home() {
       </div>
 
       {/* Made for You Section */}
-      <MadeForYou items={new Array(10).fill({})}/>
+      <MadeForYou items={new Array(10).fill({})} />
     </div>
   );
 }
