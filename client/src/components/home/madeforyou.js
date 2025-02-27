@@ -70,12 +70,12 @@ const audiobook = [
 ];
 
 // Combine all data above into a single list
-const allItems = [...music, ...podcast, ...audiobook]
+const allItems = [...music, ...podcast, ...audiobook];
 
 const MadeForYou = () => {
   const [startIndex, setStartIndex] = useState(0);
   const itemsPerPage = 4;
-  const totalItems = allItems.length
+  const totalItems = allItems.length;
 
   // Function to go to the next set of items
   const nextItems = () => {
@@ -114,9 +114,18 @@ const MadeForYou = () => {
           {allItems
             .slice(startIndex, startIndex + itemsPerPage)
             .map((item, index) => (
-              <div key={item.id} className="bg-[#2d5c7c] h-32 p-6 rounded-lg flex items-center">
-                <img src={item.img} alt={item.name} className="w-16 h-16 rounded-md"/>
-                <h3 className="pl-4 text-white text-left text-base break-words font-bold mt-2">{item.name}</h3>
+              <div
+                key={item.id}
+                className="bg-[#2d5c7c] h-32 p-6 rounded-lg flex items-center"
+              >
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  className="w-16 h-16 rounded-md"
+                />
+                <h3 className="pl-4 text-white text-left text-base break-words font-bold mt-2">
+                  {item.name}
+                </h3>
               </div>
             ))}
         </div>

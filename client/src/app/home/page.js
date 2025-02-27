@@ -28,7 +28,7 @@ export default function Home() {
       <ContentGrid selectedCategory={selectedCategory} />
 
       {/* Made for You Section */}
-      <MadeForYou items={new Array(10).fill({})} />
+      <MadeForYou />
 
       {/* Top Artist, Recent Podcasts, and Top Audiobooks Section */}
       <HomePanel />
