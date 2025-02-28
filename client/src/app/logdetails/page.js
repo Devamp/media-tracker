@@ -29,10 +29,10 @@ export default function LogDetailsPage() {
 
       {/* Main Container */}
       <div className="bg-gray-200 p-8 rounded-lg mt-10 w-3/4 shadow-md">
-        {/* Back Button */}
+        {/* Back Button (Linked to /log) */}
         <button
           className="bg-[#2d5c7c] text-white px-4 py-2 rounded-lg font-bold mb-4"
-          onClick={() => router.back()}
+          onClick={() => router.push("/log")}
         >
           Back
         </button>
@@ -69,15 +69,17 @@ export default function LogDetailsPage() {
               <option value="Audiobook">Audiobook</option>
             </select>
 
-            {/* Like Button */}
-            <button
-              className={`px-4 py-2 rounded-lg font-bold ${
-                liked ? "bg-red-500 text-white" : "bg-gray-300 text-gray-700"
-              }`}
-              onClick={() => setLiked(!liked)}
-            >
-              {liked ? "♥ Liked" : "♡ Like"}
-            </button>
+            {/* Like Button (Smaller & Centered) */}
+            <div className="flex justify-center mt-4">
+              <button
+                className={`px-3 py-1 rounded-md text-sm font-semibold transition ${
+                  liked ? "bg-red-500 text-white" : "bg-gray-300 text-gray-700"
+                }`}
+                onClick={() => setLiked(!liked)}
+              >
+                {liked ? "♥ Liked" : "♡ Like"}
+              </button>
+            </div>
           </div>
         </div>
 
