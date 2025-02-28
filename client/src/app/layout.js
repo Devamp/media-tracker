@@ -28,9 +28,13 @@ export default async function RootLayout({ children }) {
 
   if (!token) {
     return (
-      <div>
-        <p>No token found. Please log in.</p>
-      </div>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#2d5c7c]`}
+        >
+          {children}
+        </body>
+      </html>
     );
   }
 

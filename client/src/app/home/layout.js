@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import Home from "./page";
 
-// server side compoenent to fetch JWT & user information
+// server side component to fetch JWT & user information
 export default async function HomeLayout() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token");
@@ -14,7 +14,6 @@ export default async function HomeLayout() {
       </div>
     );
   }
-
   try {
     const decoded = jwt.verify(
       token.value,
