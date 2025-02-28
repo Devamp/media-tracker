@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const LoginBody = ({ setWasLoginSuccessful }) => {
   const [isLoading, setIsLoading] = useState(false); // state to hold login processing
@@ -33,14 +34,22 @@ const LoginBody = ({ setWasLoginSuccessful }) => {
         body: JSON.stringify(loginData),
       });
 
-      setTimeout(() => {
+      // if response is ok, set the user cookie
+      setTimeout(async () => {
         if (res.ok) {
-          setWasLoginSuccessful(true);
-          router.push("/home");
+          const data = await res.json();
+
+          if (data.token) {
+            setWasLoginSuccessful(true);
+            Cookies.set("token", data.token, { expires: 1 }); // expires in 1 day
+            router.push("/home");
+          }
+          
         } else {
           setWasLoginSuccessful(false);
           console.log("Something went wrong.");
         }
+
         setIsLoading(false);
       }, 1500);
     } catch (error) {

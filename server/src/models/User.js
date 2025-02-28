@@ -15,6 +15,18 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    musicPreferences: {
+      type: [String],
+      required: true,
+    },
+    audiobookPreferences: {
+      type: [String],
+      required: true,
+    },
+    podcastPreferences: {
+      type: [String],
+      required: true,
+    },
   },
   {
     collection: "Users",
