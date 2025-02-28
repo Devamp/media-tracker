@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import NavBar from "@/components/navbar";
 
 export default function LogDetailsPage() {
   const router = useRouter();
@@ -23,10 +22,7 @@ export default function LogDetailsPage() {
   };
 
   return (
-    <div className="flex flex-col items-center w-full min-h-screen bg-[#2D5C7C]">
-      {/* Navbar */}
-      <NavBar />
-
+    <div className="flex flex-col items-center justify-center w-full min-h-screen bg-[#2D5C7C]">
       {/* Main Container */}
       <div className="bg-gray-200 p-8 rounded-lg mt-10 w-3/4 shadow-md">
         {/* Back Button (Linked to /log) */}

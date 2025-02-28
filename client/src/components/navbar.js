@@ -10,12 +10,12 @@ import Link from "next/link";
 const navigation = [
   {
     name: "Home",
-    href: "#",
+    href: "/home",
     icon: <HomeIcon />,
   },
   {
     name: "My Log",
-    href: "#",
+    href: "/mylog",
     icon: <MusicalNoteIcon />,
   },
 ];
@@ -27,9 +27,9 @@ export default function NavBar({ user }) {
       <div className="flex items-center space-x-12">
         <Image alt="Logo" src="/TrackifyLogo.PNG" width={50} height={50} />
         {navigation.map((item) => (
-          <a key={item.name} href={item.href} className="size-6">
+          <Link key={item.name} href={item.href} className="size-6">
             {item.icon}
-          </a>
+          </Link>
         ))}
       </div>
 

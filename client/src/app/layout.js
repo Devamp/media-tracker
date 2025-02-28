@@ -1,5 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
 import "./globals.css";
+import ClientLayout from "@/components/ClientLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,14 +22,39 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#2d5c7c]`}
-      >
-        {children}
-      </body>
-    </html>
-  );
+export default async function RootLayout({ children }) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token");
+
+  if (!token) {
+    return (
+      <div>
+        <p>No token found. Please log in.</p>
+      </div>
+    );
+  }
+
+  try {
+    const decoded = jwt.verify(
+      token.value,
+      "bBGIn68xpGu0k1LP0HFleWEculQqZEmK23ZGNGjYegA"
+    );
+
+    return (
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#2d5c7c]`}
+        >
+          <ClientLayout user={decoded}>{children}</ClientLayout>
+        </body>
+      </html>
+    );
+  } catch (error) {
+    console.error("JWT verification failed:", error);
+    return (
+      <div>
+        <p>Token is invalid. Please log in again.</p>
+      </div>
+    );
+  }
 }
