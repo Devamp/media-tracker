@@ -46,9 +46,11 @@ export default function NavBar() {
 
       {/* Profile & + Log Button */}
       <div className="flex items-center space-x-12">
-        <button className="bg-[#2d5c7c] text-white px-4 py-2 rounded-xl font-bold">
-          + Log
-        </button>
+        <Link href="/log">
+          <button className="bg-[#2d5c7c] text-white px-4 py-2 rounded-xl font-bold">
+            + Log
+          </button>
+        </Link>
 
         <Menu as="div" className="relative ml-3">
           {/* Profile Dropdown */}
