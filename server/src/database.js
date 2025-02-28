@@ -20,13 +20,45 @@ const ConnectDB = async () => {
   }
 };
 
+// function to update the users preferences based on userEmail
+const InsertPreferences = async ({
+  musicPreferences,
+  audiobookPreferences,
+  podcastPreferences,
+  userEmail,
+}) => {
+  try {
+    await ConnectDB(); // establish connection
+    const existingUser = await User.findOne({ email: userEmail });
+
+    if (existingUser) {
+      await User.findOneAndUpdate(
+        { email: userEmail },
+        {
+          musicPreferences: musicPreferences,
+          audiobookPreferences: audiobookPreferences,
+          podcastPreferences: podcastPreferences,
+        }
+      );
+      console.log("User preferences updated.");
+      return { user: existingUser.user, email: existingUser.email };
+    }
+
+    console.log("User does not exist");
+    return false;
+  } catch (error) {
+    console.log("Error inserting user:", error.message);
+    return false; // Return false if there is an error
+  }
+};
+
 // function to insert new User data into the database
 const InsertUser = async (userData) => {
   try {
     await ConnectDB(); // establish connection
 
     // Check if the user already exists (based on email or username)
-    const existingUser = await User.findOne({ email: userData.email }); // or use { username: userData.username }
+    const existingUser = await User.findOne({ email: userData.email });
 
     if (existingUser) {
       console.log("User already exists.");
@@ -48,10 +80,10 @@ const VerifyUser = async (userData) => {
   try {
     await ConnectDB(); // establish connection
 
-    const user = await User.findOne({ email: userData.email });
-    if (user && user.password === userData.password) {
+    const user = await User.findOne({ email: userData.userEmail });
+    if (user && user.password === userData.userPassword) {
       console.log("User verified successfully.");
-      return true; 
+      return { username: user.user };
     }
     console.log("Invalid credentials.");
   } catch (error) {
@@ -60,4 +92,4 @@ const VerifyUser = async (userData) => {
   return false;
 };
 
-module.exports = { ConnectDB, InsertUser, VerifyUser };
+module.exports = { ConnectDB, InsertUser, VerifyUser, InsertPreferences };

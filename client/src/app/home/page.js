@@ -7,15 +7,16 @@ import MadeForYou from "@/components/home/madeforyou";
 import HomePanel from "@/components/home/homePanel";
 import { useState } from "react";
 
-export default function Home() {
-  const category = ["All", "Music", "Podcasts", "Audiobooks"]; // Category Buttons
+// Category Buttons
+const category = ["All", "Music", "Podcasts", "Audiobooks"];
 
-  const [selectedCategory, setSelectedCategory] = useState("All");
+export default function Home({ user }) {
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   return (
     <div className="bg-[#2d5c7c] min-h-screen">
       {/* Navbar */}
-      <NavBar />
+      <NavBar user={user} />
 
       {/* Category Buttons */}
       <CategoryButtons
@@ -28,10 +29,7 @@ export default function Home() {
       <ContentGrid selectedCategory={selectedCategory} />
 
       {/* Made for You Section */}
-      <MadeForYou />
-
-      {/* Top Artist, Recent Podcasts, and Top Audiobooks Section */}
-      <HomePanel />
+      <MadeForYou items={new Array(10).fill({})} />
     </div>
   );
 }

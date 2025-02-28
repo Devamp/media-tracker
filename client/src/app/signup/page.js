@@ -63,8 +63,8 @@ export default function SignUp() {
       if (res.ok) {
         setTimeout(() => {
           setIsSuccessful(true);
-          setIsLoading(false);          
-          router.push("/onboarding"); // once a new user is registered, route them to onboarding
+          router.push(`/onboarding?email=${email}`); // once a new user is registered, route them to onboarding
+          setIsLoading(false);
         }, 1500);
       } else {
         if (res.status === 401) {
@@ -74,10 +74,6 @@ export default function SignUp() {
         console.log("Something went wrong.");
       }
 
-      setUsername("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
       setDoPasswordsMatch(true);
     } catch (error) {
       setIsLoading(false);
