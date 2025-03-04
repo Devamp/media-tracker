@@ -56,9 +56,15 @@ export default async function RootLayout({ children }) {
   } catch (error) {
     console.error("JWT verification failed:", error);
     return (
-      <div>
-        <p>Token is invalid. Please log in again.</p>
-      </div>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#2d5c7c]`}
+        >
+          <div>
+            <p>Token is invalid. Please log in again.</p>
+          </div>
+        </body>
+      </html>
     );
   }
 }
