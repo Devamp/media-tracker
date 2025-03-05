@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import NavBar from "@/components/navbar";
 
 export default function LogDetailsPage() {
   const router = useRouter();
