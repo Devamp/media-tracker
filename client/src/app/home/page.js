@@ -5,6 +5,7 @@ import ContentGrid from "@/components/home/contentGrid";
 import MadeForYou from "@/components/home/madeforyou";
 import HomePanel from "@/components/home/homePanel";
 import { useState } from "react";
+import NavBar from "@/components/navbar";
 
 // Category Buttons
 const category = ["All", "Music", "Podcasts", "Audiobooks"];
@@ -14,6 +15,9 @@ export default function Home() {
 
   return (
     <div className="bg-[#2d5c7c] min-h-screen">
+      {/* NavBar */}
+      <NavBar />
+
       {/* Category Buttons */}
       <CategoryButtons
         category={category}

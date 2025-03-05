@@ -23,6 +23,9 @@ export default function LogDetailsPage() {
 
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen bg-[#2D5C7C]">
+      {/* NavBar */}
+      <NavBar />
+
       {/* Main Container */}
       <div className="bg-gray-200 p-8 rounded-lg mt-10 w-3/4 shadow-md">
         {/* Back Button (Linked to /log) */}
