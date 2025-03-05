@@ -10,6 +10,7 @@ app.use(express.json());
 
 const port = 5001;
 
+// login route to process user login and jwt token creation
 app.post("/login", async (req, res) => {
   try {
     if (req.body) {
@@ -43,6 +44,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
+// signup route to process new user signups
 app.post("/signup", async (req, res) => {
   try {
     if (req.body) {
@@ -66,6 +68,7 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// route to update user preferences during onboarding and jwt token creation (supports /signup)
 app.post("/submit-preferences", async (req, res) => {
   try {
     if (req.body) {
@@ -115,6 +118,36 @@ app.post("/submit-preferences", async (req, res) => {
   }
 });
 
+// route to fetch current [logged in] user's information
+app.get("/user-data", (req, res) => {
+  const authHeader = req.headers["authorization"];
+
+  // check if the Authorization header exists
+  if (authHeader && authHeader.startsWith("Bearer ")) {
+    const token = authHeader.split(" ")[1]; // extract token from "Bearer <token>"
+
+    // verify the token
+    jwt.verify(
+      token,
+      "bBGIn68xpGu0k1LP0HFleWEculQqZEmK23ZGNGjYegA",
+      (err, decoded) => {
+        if (err) {
+          return res
+            .status(403)
+            .json({ message: "Token is invalid or expired" });
+        }
+
+        // if token is valid, decoded contains the user data
+        const user = decoded;
+        res.status(200).json({ user });
+      }
+    );
+  } else {
+    res.status(401).json({ message: "Authorization token not provided" });
+  }
+});
+
+// start server 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
