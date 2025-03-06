@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import NavBar from "@/components/navbar";
+import NavBar from "@/components/navbar/navbar";
 
 export default function LogPage() {
   const router = useRouter();

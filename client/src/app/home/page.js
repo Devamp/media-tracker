@@ -5,7 +5,7 @@ import ContentGrid from "@/components/home/contentGrid";
 import MadeForYou from "@/components/home/madeforyou";
 import HomePanel from "@/components/home/homePanel";
 import { useState } from "react";
-import NavBar from "@/components/navbar";
+import NavBar from "@/components/navbar/navbar";
 
 // Category Buttons
 const category = ["All", "Music", "Podcasts", "Audiobooks"];
