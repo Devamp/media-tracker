@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import NavBar from "@/components/navbar";
+import NavBar from "@/components/navbar/navbar";
 import { useRouter } from "next/navigation";
 import { HeartIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 
