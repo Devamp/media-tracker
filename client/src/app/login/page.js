@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
 
 const LoginBody = ({ setWasLoginSuccessful }) => {
   const [isLoading, setIsLoading] = useState(false); // state to hold login processing
@@ -41,10 +40,9 @@ const LoginBody = ({ setWasLoginSuccessful }) => {
 
           if (data.token) {
             setWasLoginSuccessful(true);
-            Cookies.set("token", data.token, { expires: 1 }); // expires in 1 day
+            sessionStorage.setItem("token", data.token); // store current token in session storage
             router.push("/home");
           }
-          
         } else {
           setWasLoginSuccessful(false);
           console.log("Something went wrong.");

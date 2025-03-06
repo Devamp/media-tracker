@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Cookies from "js-cookie";
 
 export default function PodcastInterests() {
   const router = useRouter();
@@ -81,7 +80,7 @@ export default function PodcastInterests() {
         const data = await response.json();
 
         if (data.token) {
-          Cookies.set("token", data.token, { expires: 1 }); // expires in 1 day
+          sessionStorage.setItem("token", data.token); // store current token in session storage
           router.push("/home");
         }
       })
