@@ -1,11 +1,13 @@
+import { useEffect, useState } from "react";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   HomeIcon,
   MusicalNoteIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import Image from "next/image";
-import Link from "next/link";
 
 const navigation = [
   {
@@ -15,12 +17,58 @@ const navigation = [
   },
   {
     name: "My Log",
-    href: "/mylog",
+    href: "/mylog", // update once we have route defined
     icon: <MusicalNoteIcon />,
   },
 ];
 
-export default function NavBar({ user }) {
+export default function NavBar() {
+  const [user, setUser] = useState({}); // store current user state
+  const router = useRouter();
+
+  // clear session upon user logout
+  const handleLogout = (e) => {
+    e.preventDefault();
+    sessionStorage.removeItem("token");
+    router.push("/login");
+  };
+
+  // fetch and set user data
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = sessionStorage.getItem("token"); // get the token from sessionStorage
+
+      try {
+        const res = await fetch("http://localhost:5001/user-data", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`, // send the token in the Authorization header
+            "Content-Type": "application/json",
+          },
+        });
+
+        // if error, reset to login page
+        if (res.status === 401 || res.status === 403) {
+          console.log("Token is expired or invalid.");
+          sessionStorage.removeItem("token"); // clear the token
+          router.push("/login");
+        }
+
+        // update current user state upon success
+        if (res.ok) {
+          const data = await res.json();
+          setUser(data.user);
+        } else {
+          console.log("Token is invalid or expired");
+        }
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   return (
     <nav className="bg-stone-300 p-4 pl-10 pr-10 flex items-center justify-between rounded-xl top-0 left-0 w-full z-50 shadow-md fixed">
       {/* Navigation Links */}
@@ -78,7 +126,9 @@ export default function NavBar({ user }) {
             </MenuItem>
             <MenuItem>
               <span className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden">
-                <Link href="/login">Logout</Link>
+                <Link href="/login" onClick={handleLogout}>
+                  Logout
+                </Link>
               </span>
             </MenuItem>
           </MenuItems>
