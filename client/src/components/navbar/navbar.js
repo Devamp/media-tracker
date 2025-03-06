@@ -120,7 +120,7 @@ export default function NavBar() {
               </span>
             </MenuItem>
             <MenuItem>
-              <span className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden">
+              <span className="block hover:bg-gray-100 cursor-pointer px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden">
                 <Link href="/login" onClick={handleLogout}>
                   Logout
                 </Link>
