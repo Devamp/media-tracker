@@ -11,7 +11,7 @@ const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState(""); // Store user input from the search bar
   const [isDropdownVisible, setDropdownVisible] = useState(false); // State to control dropdown visibility
   const [loading, setLoading] = useState(false); // Loading state to show "Loading..." when fetching data
-  const [music, setMusic] = useState([]); // Store albums results (albums for now - will change to songs later)
+  const [searchResults, setSearchResults] = useState([]); // Store search results
 
   // Fetch Spotify API Access Token when the component mounts -----
   useEffect(() => {
@@ -42,7 +42,7 @@ const SearchBar = () => {
   useEffect(() => {
     if (!searchTerm.trim()) {
       // If search input is empty, clear results and hide dropdown
-      setMusic([]);
+      setSearchResults([]);
       setDropdownVisible(false);
       return;
     }
@@ -64,9 +64,11 @@ const SearchBar = () => {
     setLoading(true); // Show loading state while fetching data
 
     try {
-      // First API call: Search for an artist by name
+      // Spotify Search API: Look for songs (tracks), podcasts (shows), and audiobooks (episodes)
       const searchResponse = await fetch(
-        `https://api.spotify.com/v1/search?q=${searchTerm}&type=artist`,
+        `https://api.spotify.com/v1/search?q=${encodeURIComponent(
+          searchTerm
+        )}&type=track,show,episode&limit=2`, // encodeURIComponent ensures search query is properly formatted (lo-fi beats -> lo-fi%20beats)
         {
           method: "GET",
           headers: {
@@ -78,37 +80,23 @@ const SearchBar = () => {
 
       const searchData = await searchResponse.json();
 
-      // If no artists are found, clear results and show "No results"
-      if (searchData.artists.items.length === 0) {
-        setMusic([]);
-        setDropdownVisible(true);
-        setLoading(false);
-        return;
-      }
+      // Extract results for each category
+      const songs = searchData.tracks?.items || [];
+      const podcasts = searchData.shows?.items || [];
+      const audiobooks = searchData.episodes?.items || [];
 
-      // Get the first artist's ID (most relevant result)
-      const artistID = searchData.artists.items[0].id;
+      // Combine all results into a single array
+      const combinedResults = [
+        ...songs.map((item) => ({ type: "Song", ...item })),
+        ...podcasts.map((item) => ({ type: "Podcast", ...item })),
+        ...audiobooks.map((item) => ({ type: "Audiobook", ...item })),
+      ];
 
-      // Second API call: Fetch albums from the found artist
-      const albumResponse = await fetch(
-        `https://api.spotify.com/v1/artists/${artistID}/albums?include_groups=album&market=US&limit=5`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      const albumData = await albumResponse.json();
-
-      // Update music state with fetched album data
-      setMusic(albumData.items || []);
+      setSearchResults(combinedResults);
       setDropdownVisible(true);
     } catch (error) {
       console.error("Error fetching data: ", error);
-      setMusic([]); // Clear results on error
+      setSearchResults([]); // Clear results on error
     } finally {
       setLoading(false); // Hide loading state
     }
@@ -138,23 +126,41 @@ const SearchBar = () => {
           {/* Show loading message while fetching results */}
           {loading ? (
             <p className="p-2 text-center text-gray-500">Loading...</p>
-          ) : music?.length > 0 ? (
+          ) : searchResults.length > 0 ? (
             // Display search results
-            music.map((result, index) => (
+            searchResults.map((result, index) => (
               <div
                 key={index}
-                className="p-2 hover:bg-gray-100 cursor-pointer text-sm flex items-center"
+                className="p-2 hover:bg-gray-100 cursor-pointer text-sm flex items-center justify-between"
                 onMouseDown={() => setSearchTerm(result.name)} // Update input when clicking result
               >
-                <img
-                  src={
-                    result.images?.[0]?.url ||
-                    "../../../public/TrackifyLogo.PNG"
-                  }
-                  alt={result.name}
-                  className="w-12 h-12 rounded-lg"
-                />
-                <p className="flex justify-center pl-4">{result.name}</p>
+                {/* Left side: Image and Name */}
+                <div className="flex items-center">
+                  <img
+                    src={
+                      result.type === "track"
+                        ? result.album?.images?.[0]?.url // Get image from album for tracks (songs)
+                        : result.images?.[0]?.url || "/TrackifyLogo.PNG"
+                    }
+                    alt={result.name}
+                    className="w-12 h-12 rounded-lg"
+                  />
+                  <div className="flex flex-col pl-4">
+                    <p className="font-medium">{result.name}</p>
+                    <p className="text-xs text-gray-500">
+                      {result.type === "track" && result.artists[0]?.name}
+                      {result.type === "show" && result.publisher}
+                      {result.type === "episode" && result.show?.publisher}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right side: Result Type (Song/Podcast/Audiobook) */}
+                <p className="text-sm text-gray-500">
+                  {result.type === "track" && "Song"}
+                  {result.type === "show" && "Podcast"}
+                  {result.type === "episode" && "Audiobook"}
+                </p>
               </div>
             ))
           ) : (
