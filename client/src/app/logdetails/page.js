@@ -20,11 +20,14 @@ export default function LogDetailsPage() {
     };
     console.log("Log Entry Saved:", logEntry);
     // Later, this can be sent to a database
+
+    // Navigate to logtable page after saving
+    router.push("/logtable");
   };
 
   return (
-    <div className="flex flex-col items-center w-full min-h-screen bg-[#2D5C7C]">
-      {/* Navbar */}
+    <div className="flex flex-col items-center justify-center w-full min-h-screen bg-[#2D5C7C]">
+      {/* NavBar */}
       <NavBar />
 
       {/* Main Container */}
