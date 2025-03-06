@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function MusicPref() {
+export default function MusicPref({ userEmail }) {
   const router = useRouter();
+  const [selected, setSelected] = useState([]);
 
   const genres = [
     "Pop",
@@ -25,8 +26,6 @@ export default function MusicPref() {
     "Techno",
   ];
 
-  const [selected, setSelected] = useState([]);
-
   const toggleSelection = (genre) => {
     if (selected.includes(genre)) {
       setSelected((prev) => prev.filter((g) => g !== genre));
@@ -40,7 +39,7 @@ export default function MusicPref() {
       router.push(
         `/onboarding/audiobook?musicPreferences=${encodeURIComponent(
           JSON.stringify(selected)
-        )}`
+        )}&email=${userEmail}`
       );
     }
   };

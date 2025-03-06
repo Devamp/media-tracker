@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import NavBar from "@/components/navbar";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import NavBar from "@/components/navbar/navbar";
 
 export default function LogPage() {
   const router = useRouter();
@@ -37,12 +37,12 @@ export default function LogPage() {
   };
 
   return (
-    <div className="flex flex-col items-center w-full min-h-screen bg-[#2D5C7C]">
-      {/* Navbar */}
+    <div className="flex flex-col mt-28 items-center w-full min-h-screen bg-[#2D5C7C]">
+      {/* NavBar */}
       <NavBar />
 
       {/* Main Section */}
-      <div className="text-center mt-12">
+      <div className="text-center">
         <h1 className="text-white text-4xl font-bold flex items-center justify-center">
           Add to Your List ✅
         </h1>

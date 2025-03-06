@@ -33,14 +33,21 @@ const LoginBody = ({ setWasLoginSuccessful }) => {
         body: JSON.stringify(loginData),
       });
 
-      setTimeout(() => {
+      // if response is ok, set the user cookie
+      setTimeout(async () => {
         if (res.ok) {
-          setWasLoginSuccessful(true);
-          router.push("/home");
+          const data = await res.json();
+
+          if (data.token) {
+            setWasLoginSuccessful(true);
+            sessionStorage.setItem("token", data.token); // store current token in session storage
+            router.push("/home");
+          }
         } else {
           setWasLoginSuccessful(false);
           console.log("Something went wrong.");
         }
+
         setIsLoading(false);
       }, 1500);
     } catch (error) {

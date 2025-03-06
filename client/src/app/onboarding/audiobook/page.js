@@ -7,6 +7,7 @@ export default function AudiobookPref() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [selected, setSelected] = useState([]);
+  const [userEmail, setUserEmail] = useState("");
   const [musicPreferences, setMusicPreferences] = useState([]);
 
   const genres = [
@@ -35,6 +36,9 @@ export default function AudiobookPref() {
         JSON.parse(decodeURIComponent(searchParams.get("musicPreferences")))
       );
     }
+    if (searchParams.has("email")) {
+      setUserEmail(searchParams.get("email"));
+    }
   }, [searchParams]);
 
   const toggleSelection = (genre) => {
@@ -50,7 +54,9 @@ export default function AudiobookPref() {
       router.push(
         `/onboarding/podcast?musicPreferences=${encodeURIComponent(
           JSON.stringify(musicPreferences)
-        )}&audiobookPreferences=${encodeURIComponent(JSON.stringify(selected))}`
+        )}&audiobookPreferences=${encodeURIComponent(
+          JSON.stringify(selected)
+        )}&email=${userEmail}`
       );
     }
   };

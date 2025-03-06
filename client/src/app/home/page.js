@@ -1,52 +1,37 @@
 "use client";
 
-import MadeForYou from "@/components/madeforyou";
-import NavBar from "@/components/navbar";
+import CategoryButtons from "@/components/home/categoryButtons";
+import ContentGrid from "@/components/home/contentGrid";
+import MadeForYou from "@/components/home/madeforyou";
+import HomePanel from "@/components/home/homePanel";
 import { useState } from "react";
+import NavBar from "@/components/navbar/navbar";
 
 // Category Buttons
 const category = ["All", "Music", "Podcasts", "Audiobooks"];
 
 export default function Home() {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   return (
     <div className="bg-[#2d5c7c] min-h-screen">
-      {/* Navbar */}
+      {/* NavBar */}
       <NavBar />
 
       {/* Category Buttons */}
-      <div className="bg-[#2d5c7c] pl-12 p-8 flex space-x-4">
-        {category.map((category) => (
-          <button
-            key={category}
-            className={`px-4 py-2 rounded-full font-medium ${
-              selectedCategory === category
-                ? "bg-white text-[#2d5c7c]" // Active Button
-                : "bg-[#60849b] text-white hover:bg-[#27506c]" // Default Button
-            } `}
-            onClick={() => setSelectedCategory(category)} // Update the state on click to selected category
-          >
-            {category}
-          </button>
-        ))}
-      </div>
+      <CategoryButtons
+        category={category}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
 
       {/* Content Grid */}
-      <div className="bg-[#2d5c7c] p-12 pt-0 grid grid-cols-3 gap-x-12 gap-y-6">
-        {Array(6)
-          .fill()
-          .map((_, index) => (
-            <div key={index} className="bg-white h-20 rounded-lg">
-              <span className="font-medium flex justify-center">
-                {selectedCategory}
-              </span>
-            </div>
-          ))}
-      </div>
+      <ContentGrid selectedCategory={selectedCategory} />
 
       {/* Made for You Section */}
-      <MadeForYou items={new Array(10).fill({})}/>
+      <MadeForYou items={new Array(10).fill({})} />
+
+      <HomePanel />
     </div>
   );
 }

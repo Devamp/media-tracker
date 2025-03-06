@@ -10,6 +10,7 @@ export default function PodcastInterests() {
   const [musicPreferences, setMusicPreferences] = useState([]);
   const [audiobookPreferences, setAudiobookPreferences] = useState([]);
   const [showConfirmation, setShowConfirmation] = useState(false); // Modal state
+  const [userEmail, setUserEmail] = useState("");
 
   const genres = [
     "Technology",
@@ -31,6 +32,9 @@ export default function PodcastInterests() {
   ];
 
   useEffect(() => {
+    if (searchParams.has("email")) {
+      setUserEmail(searchParams.get("email"));
+    }
     if (searchParams.has("musicPreferences")) {
       setMusicPreferences(
         JSON.parse(decodeURIComponent(searchParams.get("musicPreferences")))
@@ -59,20 +63,26 @@ export default function PodcastInterests() {
 
   const confirmAndNavigate = () => {
     const userPreferences = {
+      userEmail,
       musicPreferences,
       audiobookPreferences,
       podcastPreferences: selected,
     };
 
-    fetch("/api/submit-preferences", {
+    fetch("http://localhost:5001/submit-preferences", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userPreferences),
     })
-      .then(() => {
-        router.push("/home"); // Redirect after submission
+      .then(async (response) => {
+        const data = await response.json();
+
+        if (data.token) {
+          sessionStorage.setItem("token", data.token); // store current token in session storage
+          router.push("/home");
+        }
       })
       .catch((error) => console.error("Error submitting preferences:", error));
   };
