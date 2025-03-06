@@ -3,10 +3,7 @@ import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  HomeIcon,
-  MusicalNoteIcon,
-} from "@heroicons/react/24/outline";
+import { HomeIcon, MusicalNoteIcon } from "@heroicons/react/24/outline";
 import SearchBar from "./search";
 
 const navigation = [
@@ -17,7 +14,7 @@ const navigation = [
   },
   {
     name: "My Log",
-    href: "/mylog", // update once we have route defined
+    href: "/logtable",
     icon: <MusicalNoteIcon />,
   },
 ];

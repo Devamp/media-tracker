@@ -20,6 +20,9 @@ export default function LogDetailsPage() {
     };
     console.log("Log Entry Saved:", logEntry);
     // Later, this can be sent to a database
+
+    // Navigate to logtable page after saving
+    router.push("/logtable");
   };
 
   return (
