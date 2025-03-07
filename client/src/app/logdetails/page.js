@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import NavBar from "@/components/navbar/navbar";
 
 export default function LogDetailsPage() {
@@ -10,6 +10,7 @@ export default function LogDetailsPage() {
   const categoryQuery = searchParams.get("category") || "track";
   const imageQuery = searchParams.get("image") || "";
 
+  const router = useRouter();
   const [date, setDate] = useState(() => new Date().toISOString().split("T")[0]);
   const [category, setCategory] = useState(""); // Default category
   const [liked, setLiked] = useState(false);
