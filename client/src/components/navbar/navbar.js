@@ -74,7 +74,7 @@ export default function NavBar() {
           <Image alt="Logo" src="/TrackifyLogo.PNG" width={50} height={50} />
         </Link>
         {navigation.map((item) => (
-          <Link key={item.name} href={item.href} className="size-6">
+          <Link key={item.name} href={item.href} className="size-6 hover:scale-110">
             {item.icon}
           </Link>
         ))}

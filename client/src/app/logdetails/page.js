@@ -1,15 +1,32 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import NavBar from "@/components/navbar/navbar";
 
 export default function LogDetailsPage() {
-  const router = useRouter();
-  const [date, setDate] = useState("");
-  const [category, setCategory] = useState("Music"); // Default category
+  const searchParams = useSearchParams();
+  const nameQuery = searchParams.get("name") || "Unknown";
+  const categoryQuery = searchParams.get("category") || "track";
+  const imageQuery = searchParams.get("image") || "";
+
+  const [date, setDate] = useState(() => new Date().toISOString().split("T")[0]);
+  const [category, setCategory] = useState(""); // Default category
   const [liked, setLiked] = useState(false);
   const [review, setReview] = useState("");
+
+  // Map query values to category values
+  const categoryMapping = {
+    track: "Music",
+    show: "Podcast",
+    episode: "Audiobook",
+  };
+
+  // Update the category in state if query changes
+  useEffect(() => {
+    const mappedCategory = categoryMapping[categoryQuery] || "Music"; // Default to "Music" if not found
+    setCategory(mappedCategory);
+  }, [categoryQuery]);
 
   const handleSave = () => {
     const logEntry = {
@@ -42,12 +59,20 @@ export default function LogDetailsPage() {
 
         {/* Title */}
         <h1 className="text-[#2D5C7C] text-3xl font-bold mb-4">
-          I listened to...
+          I listened to: {nameQuery}
         </h1>
 
         <div className="flex space-x-6">
           {/* Image Placeholder */}
-          <div className="w-40 h-40 bg-gray-300 rounded-lg border border-gray-500"></div>
+          {imageQuery ? (
+            <img
+              src={imageQuery}
+              alt={nameQuery}
+              className="w-40 h-40 bg-gray-300 rounded-lg border border-gray-500"
+            />
+          ) : (
+            <div className="w-40 h-40 bg-gray-300 rounded-lg border border-gray-500"></div>
+          )}
 
           {/* Details Section */}
           <div className="flex flex-col space-y-3 w-full">
