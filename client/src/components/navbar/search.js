@@ -3,8 +3,8 @@ import Link from "next/link";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 // Spotify API's ID and SECRET
-const CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_API_CLIENT_ID;
-const CLIENT_SECRET = process.env.NEXT_PUBLIC_SPOTIFY_API_CLIENT_SECRET;
+const CLIENT_ID = "ee5e278a45544efd850a529f892bc1ed";
+const CLIENT_SECRET = "a2690b3b58494987bf062fca1e06b0b1";
 
 // Search Bar
 const SearchBar = () => {
