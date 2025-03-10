@@ -30,10 +30,10 @@ export default function LogDetailsPage() {
 
       {/* Main Container */}
       <div className="bg-gray-200 p-8 rounded-lg mt-10 w-3/4 shadow-md">
-        {/* Back Button (Linked to /logtable) */}
+        {/* Back Button (Linked to /home) */}
         <button
           className="bg-[#2d5c7c] text-white px-4 py-2 rounded-lg font-bold mb-4"
-          onClick={() => router.push("/logtable")}
+          onClick={() => router.push("/home")}
         >
           Back
         </button>
