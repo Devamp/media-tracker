@@ -112,6 +112,7 @@ export default function ContentGrid({ selectedCategory }) {
 
   return (
     <div className="bg-[#2d5c7c] p-12 pt-0 grid grid-cols-3 gap-x-12 gap-y-6">
+      {/* Render the selected category's content, show message if no items are available */}
       {categoryData.length > 0 ? (
         categoryData.map((item) => (
           <div

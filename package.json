@@ -1,0 +1,11 @@
+{
+  "name": "trackify",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\""
+  },
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

@@ -11,7 +11,7 @@ import NavBar from "@/components/navbar/navbar";
 const category = ["All", "Music", "Podcasts", "Audiobooks"];
 
 export default function Home() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("All"); // for updating the category in the content grid
 
   return (
     <div className="bg-[#2d5c7c] min-h-screen">
