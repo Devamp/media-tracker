@@ -26,7 +26,7 @@ export default function NavBar() {
   // clear session upon user logout
   const handleLogout = (e) => {
     e.preventDefault();
-    sessionStorage.removeItem("token");
+    sessionStorage.clear();
     router.push("/login");
   };
 
@@ -55,6 +55,7 @@ export default function NavBar() {
         if (res.ok) {
           const data = await res.json();
           setUser(data.user);
+          sessionStorage.setItem("userData", JSON.stringify(data.user));
         } else {
           console.log("Token is invalid or expired");
         }
