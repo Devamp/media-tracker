@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("./models/user");
+const Log = require("./models/Log");
 
 // function to establish connection to MongoDB
 const ConnectDB = async () => {
@@ -92,4 +93,57 @@ const VerifyUser = async (userData) => {
   return false;
 };
 
-module.exports = { ConnectDB, InsertUser, VerifyUser, InsertPreferences };
+// function to insert log data for current user
+const InsertLog = async (logData) => {
+  try {
+    await ConnectDB(); // establish connection
+
+    // Check if the user already exists (based on email)
+    const existingUser = await Log.findOne({ userEmail: logData.userEmail });
+
+    if (existingUser) {
+      // Append the new media log to the 'data' array for the existing user
+      await Log.findOneAndUpdate(
+        { userEmail: logData.userEmail },
+        {
+          $push: {
+            data: {
+              mediaName: logData.mediaName,
+              mediaImage: logData.mediaImage,
+              mediaCategory: logData.mediaCategory,
+              date: logData.mediaDate || Date.now(), // use provided mediaDate or current date
+            },
+          },
+        }
+      );
+      console.log(`Log updated for ${logData.userEmail}`);
+      return true; // Update successful
+    }
+
+    // If user doesn't exist, create a new user log
+    const newLog = await Log.create({
+      userEmail: logData.userEmail,
+      data: [
+        {
+          mediaName: logData.mediaName,
+          mediaImage: logData.mediaImage,
+          mediaCategory: logData.mediaCategory,
+          date: logData.mediaDate || Date.now(),
+        },
+      ],
+    });
+    console.log(`Log created for ${logData.userEmail}`);
+    return true; // Creation successful
+  } catch (error) {
+    console.log("Error inserting or updating log:", error.message);
+    return false; // Return false if there is an error
+  }
+};
+
+module.exports = {
+  ConnectDB,
+  InsertUser,
+  VerifyUser,
+  InsertPreferences,
+  InsertLog,
+};
