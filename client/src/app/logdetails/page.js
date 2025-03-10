@@ -1,43 +1,85 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import NavBar from "@/components/navbar/navbar";
+import { Loader2 } from "lucide-react";
 
 export default function LogDetailsPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
+  const nameQuery = searchParams.get("name") || "Unknown";
+  const categoryQuery = searchParams.get("category") || "track";
+  const imageQuery = searchParams.get("image") || "";
 
-  // Fetch details from URL parameters (if available)
-  const [audioName, setAudioName] = useState(searchParams.get("name") || "");
-  const [image, setImage] = useState(
-    searchParams.get("image") || "/placeholder.jpg"
+  const router = useRouter();
+  const [date, setDate] = useState(
+    () => new Date().toISOString().split("T")[0]
   );
-  const [category, setCategory] = useState(
-    ["Music", "Podcast", "Audiobook"].includes(searchParams.get("category"))
-      ? searchParams.get("category")
-      : "Music"
-  );
-  const [date, setDate] = useState("");
+  const [category, setCategory] = useState(""); // Default category
+  const [wasLogSaved, setWasLogSaved] = useState(true);
+  const [isLoading, setIsLoading] = useState(false); // state to hold login processing
 
-  // Save log details (this can be later sent to a backend)
-  const handleSave = () => {
+  // Map query values to category values
+  const categoryMapping = {
+    track: "Music",
+    show: "Podcast",
+    episode: "Audiobook",
+  };
+
+  // Update the category in state if query changes
+  useEffect(() => {
+    const mappedCategory = categoryMapping[categoryQuery] || "Music"; // Default to "Music" if not found
+    setCategory(mappedCategory);
+  }, [categoryQuery]);
+
+  // push the client-side log data to the server and save in DB
+  const handleSave = async (e) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+
+    const userData = sessionStorage.getItem("userData");
+
+    if (!userData) {
+      console.error("User Data not found");
+    }
+
     const logEntry = {
-      audioName,
-      date,
+      userData,
+      nameQuery,
+      imageQuery,
       category,
-      image,
+      date,
     };
 
-    console.log("Log Entry Saved:", logEntry);
+    try {
+      const res = await fetch("http://localhost:5001/insert-log", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(logEntry),
+      });
 
-    // Simulate storing in localStorage (can be replaced with backend storage)
-    const savedLogs = JSON.parse(localStorage.getItem("logs")) || [];
-    savedLogs.push(logEntry);
-    localStorage.setItem("logs", JSON.stringify(savedLogs));
+      // error handling
+      if (res.status === 401 || res.status === 403) {
+        console.log("Error publishing log");
+      }
 
-    // Navigate to logtable after saving
-    router.push("/logtable");
+      // process response after 1.5 seconds
+      setTimeout(async () => {
+        if (res.ok) {
+          // Navigate to logtable page after saving
+          router.push("/logtable");
+        } else {
+          setWasLogSaved(false);
+          console.log("Something went wrong.");
+        }
+        setIsLoading(false);
+      }, 1500);
+    } catch (error) {
+      console.error("Error inserting log for current user:", error);
+    }
   };
 
   return (
@@ -47,39 +89,30 @@ export default function LogDetailsPage() {
 
       {/* Main Container */}
       <div className="bg-gray-200 p-8 rounded-lg mt-10 w-3/4 shadow-md">
-        {/* Back Button (Now redirects to Home Page) */}
+        {/* Back Button (Linked to /log) */}
         <button
           className="bg-[#2d5c7c] text-white px-4 py-2 rounded-lg font-bold mb-4"
-          onClick={() => router.push("/home")}
+          onClick={() => router.push("/log")}
         >
           Back
         </button>
 
         {/* Title */}
         <h1 className="text-[#2D5C7C] text-3xl font-bold mb-4">
-          I listened to...
+          I listened to: {nameQuery}
         </h1>
 
-        {/* Audio Name Input */}
-        <div className="mb-4">
-          <label className="text-[#2D5C7C] font-medium">Audio Name:</label>
-          <input
-            type="text"
-            value={audioName}
-            readOnly
-            className="w-full p-2 mt-1 border rounded-md bg-gray-100"
-          />
-        </div>
-
         <div className="flex space-x-6">
-          {/* Image Preview */}
-          <div className="w-40 h-40 flex items-center justify-center bg-gray-300 rounded-lg border border-gray-500">
+          {/* Image Placeholder */}
+          {imageQuery ? (
             <img
-              src={image}
-              alt="Audio Thumbnail"
-              className="w-full h-full object-cover rounded-lg"
+              src={imageQuery}
+              alt={nameQuery}
+              className="w-40 h-40 bg-gray-300 rounded-lg border border-gray-500"
             />
-          </div>
+          ) : (
+            <div className="w-40 h-40 bg-gray-300 rounded-lg border border-gray-500"></div>
+          )}
 
           {/* Details Section */}
           <div className="flex flex-col space-y-3 w-full">
@@ -92,7 +125,7 @@ export default function LogDetailsPage() {
               className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#2D5C7C]"
             />
 
-            {/* Category Selection - Now a dropdown with only 3 options */}
+            {/* Category Selection */}
             <label className="text-[#2D5C7C] font-medium">Category:</label>
             <select
               value={category}
@@ -106,13 +139,34 @@ export default function LogDetailsPage() {
           </div>
         </div>
 
+        {!wasLogSaved ? (
+          <div className="flex flex-row justify-center">
+            <p className="ml-2 text-red-500">
+              ERROR: Something went wrong trying to save your log.
+            </p>
+          </div>
+        ) : null}
+
         {/* Save Button */}
         <div className="mt-6 flex justify-end">
           <button
-            className="bg-[#2D5C7C] text-white px-6 py-3 rounded-lg font-bold"
+            type="submit"
+            className={`bg-[#2D5C7C] text-white px-6 py-3 rounded-lg font-bold ${
+              isLoading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "hover:bg-[#356a8e]"
+            }`}
+            disabled={isLoading}
             onClick={handleSave}
           >
-            Save
+            {isLoading ? (
+              <div className="flex flex-row justify-center">
+                <Loader2 className="animate-spin" size={24} />
+                <p className="ml-2 ">Saving...</p>
+              </div>
+            ) : (
+              "Save"
+            )}
           </button>
         </div>
       </div>
