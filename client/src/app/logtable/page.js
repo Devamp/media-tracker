@@ -3,7 +3,6 @@
 import { useState } from "react";
 import NavBar from "@/components/navbar/navbar";
 import { useRouter } from "next/navigation";
-import { HeartIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 
 export default function LogTablePage() {
   const router = useRouter();
@@ -16,7 +15,7 @@ export default function LogTablePage() {
       day: "21",
       entertainment: "Song A",
       category: "Music",
-      liked: true,
+      image: "/placeholder-image.png", // Replace with actual image URL
     },
     {
       id: 2,
@@ -24,7 +23,7 @@ export default function LogTablePage() {
       day: "22",
       entertainment: "Podcast B",
       category: "Podcast",
-      liked: false,
+      image: "/placeholder-image.png",
     },
     {
       id: 3,
@@ -32,7 +31,7 @@ export default function LogTablePage() {
       day: "23",
       entertainment: "Audiobook C",
       category: "Audiobook",
-      liked: false,
+      image: "/placeholder-image.png",
     },
     {
       id: 4,
@@ -40,7 +39,7 @@ export default function LogTablePage() {
       day: "24",
       entertainment: "Song D",
       category: "Music",
-      liked: true,
+      image: "/placeholder-image.png",
     },
     {
       id: 5,
@@ -48,18 +47,11 @@ export default function LogTablePage() {
       day: "25",
       entertainment: "Podcast E",
       category: "Podcast",
-      liked: false,
+      image: "/placeholder-image.png",
     },
   ]);
 
   const [filter, setFilter] = useState("All");
-
-  // Handle like toggle
-  const toggleLike = (id) => {
-    setLogs(
-      logs.map((log) => (log.id === id ? { ...log, liked: !log.liked } : log))
-    );
-  };
 
   // Filter logs based on selected category
   const filteredLogs = logs.filter(
@@ -88,40 +80,31 @@ export default function LogTablePage() {
 
       {/* Log Table */}
       <div className="bg-gray-200 p-6 rounded-lg mt-6 w-4/5 shadow-md">
-        <table className="w-full border-collapse">
+        <table className="w-full border-collapse table-fixed">
           <thead>
-            <tr className="bg-[#2D5C7C] text-white text-left">
-              <th className="p-3">Month</th>
-              <th className="p-3">Day</th>
-              <th className="p-3">Entertainment</th>
-              <th className="p-3">Category</th>
-              <th className="p-3">Like</th>
-              <th className="p-3">Edit</th>
+            <tr className="bg-[#2D5C7C] text-white text-center">
+              <th className="p-3 w-1/5">Image</th>
+              <th className="p-3 w-1/5">Month</th>
+              <th className="p-3 w-1/5">Day</th>
+              <th className="p-3 w-1/5">Entertainment</th>
+              <th className="p-3 w-1/5">Category</th>
             </tr>
           </thead>
           <tbody>
             {filteredLogs.map((log) => (
-              <tr key={log.id} className="border-b">
+              <tr key={log.id} className="border-b text-center">
+                {/* Image Column */}
+                <td className="p-3">
+                  <img
+                    src={log.image}
+                    alt="Audio Thumbnail"
+                    className="w-16 h-16 object-cover rounded-md mx-auto"
+                  />
+                </td>
                 <td className="p-3">{log.month}</td>
                 <td className="p-3">{log.day}</td>
                 <td className="p-3">{log.entertainment}</td>
                 <td className="p-3">{log.category}</td>
-                <td className="p-3 text-center">
-                  <button onClick={() => toggleLike(log.id)}>
-                    {log.liked ? (
-                      <HeartIcon className="w-5 h-5 text-red-500 fill-red-500" />
-                    ) : (
-                      <HeartIcon className="w-5 h-5 text-gray-500" />
-                    )}
-                  </button>
-                </td>
-                <td className="p-3 text-center">
-                  <button
-                    onClick={() => router.push(`/logdetails?id=${log.id}`)}
-                  >
-                    <PencilSquareIcon className="w-5 h-5 text-gray-700" />
-                  </button>
-                </td>
               </tr>
             ))}
           </tbody>
