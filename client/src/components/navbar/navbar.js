@@ -26,7 +26,7 @@ export default function NavBar() {
   // clear session upon user logout
   const handleLogout = (e) => {
     e.preventDefault();
-    sessionStorage.removeItem("token");
+    sessionStorage.clear();
     router.push("/login");
   };
 
@@ -55,6 +55,7 @@ export default function NavBar() {
         if (res.ok) {
           const data = await res.json();
           setUser(data.user);
+          sessionStorage.setItem("userData", JSON.stringify(data.user));
         } else {
           console.log("Token is invalid or expired");
         }
@@ -70,11 +71,18 @@ export default function NavBar() {
     <nav className="bg-stone-300 p-4 pl-10 pr-10 flex items-center justify-between top-0 left-0 w-full z-50 shadow-md fixed">
       {/* Navigation Links */}
       <div className="flex items-center space-x-12">
+        {/* Logo linking to Home page */}
         <Link href="/home">
           <Image alt="Logo" src="/TrackifyLogo.PNG" width={50} height={50} />
         </Link>
+
+        {/* Render navigation links dynamically */}
         {navigation.map((item) => (
-          <Link key={item.name} href={item.href} className="size-6">
+          <Link
+            key={item.name}
+            href={item.href}
+            className="size-6 hover:scale-110"
+          >
             {item.icon}
           </Link>
         ))}
@@ -110,11 +118,14 @@ export default function NavBar() {
             transition
             className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
           >
+            {/* Username */}
             <MenuItem>
               <span className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden">
                 <p className="font-bold">{user ? user.id : "Undefined"}</p>
               </span>
             </MenuItem>
+
+            {/* Logout */}
             <MenuItem>
               <span className="block hover:bg-gray-100 cursor-pointer px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden">
                 <Link href="/login" onClick={handleLogout}>

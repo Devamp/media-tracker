@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
+// Spotify API's ID and SECRET
 const CLIENT_ID = "ee5e278a45544efd850a529f892bc1ed";
 const CLIENT_SECRET = "a2690b3b58494987bf062fca1e06b0b1";
 
@@ -129,39 +131,54 @@ const SearchBar = () => {
           ) : searchResults.length > 0 ? (
             // Display search results
             searchResults.map((result, index) => (
-              <div
+              <Link
                 key={index}
-                className="p-2 hover:bg-gray-100 cursor-pointer text-sm flex items-center justify-between"
-                onMouseDown={() => setSearchTerm(result.name)} // Update input when clicking result
-              >
-                {/* Left side: Image and Name */}
-                <div className="flex items-center">
-                  <img
-                    src={
+                href={{
+                  pathname: "/logdetails",
+                  query: {
+                    name: result.name,
+                    category: result.type,
+                    image:
                       result.type === "track"
                         ? result.album?.images?.[0]?.url // Get image from album for tracks (songs)
-                        : result.images?.[0]?.url || "/TrackifyLogo.PNG"
-                    }
-                    alt={result.name}
-                    className="w-12 h-12 rounded-lg"
-                  />
-                  <div className="flex flex-col pl-4">
-                    <p className="font-medium">{result.name}</p>
-                    <p className="text-xs text-gray-500">
-                      {result.type === "track" && result.artists[0]?.name}
-                      {result.type === "show" && result.publisher}
-                      {result.type === "episode" && result.show?.publisher}
-                    </p>
+                        : result.images?.[0]?.url || "/TrackifyLogo.PNG",
+                  },
+                }}
+                className="block"
+              >
+                <div
+                  className="p-2 hover:bg-gray-100 cursor-pointer text-sm flex items-center justify-between"
+                  onMouseDown={(e) => e.preventDefault()} // Prevent dropdown from closing before the navigation
+                >
+                  {/* Left side: Image and Name */}
+                  <div className="flex items-center">
+                    <img
+                      src={
+                        result.type === "track"
+                          ? result.album?.images?.[0]?.url // Get image from album for tracks (songs)
+                          : result.images?.[0]?.url || "/TrackifyLogo.PNG"
+                      }
+                      alt={result.name}
+                      className="w-12 h-12 rounded-lg"
+                    />
+                    <div className="flex flex-col pl-4">
+                      <p className="font-medium">{result.name}</p>
+                      <p className="text-xs text-gray-500">
+                        {result.type === "track" && result.artists[0]?.name}
+                        {result.type === "show" && result.publisher}
+                        {result.type === "episode" && result.show?.publisher}
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                {/* Right side: Result Type (Song/Podcast/Audiobook) */}
-                <p className="text-sm text-gray-500">
-                  {result.type === "track" && "Song"}
-                  {result.type === "show" && "Podcast"}
-                  {result.type === "episode" && "Audiobook"}
-                </p>
-              </div>
+                  {/* Right side: Result Type (Song/Podcast/Audiobook) */}
+                  <p className="text-sm text-gray-500">
+                    {result.type === "track" && "Song"}
+                    {result.type === "show" && "Podcast"}
+                    {result.type === "episode" && "Audiobook"}
+                  </p>
+                </div>
+              </Link>
             ))
           ) : (
             // Show message if no results found

@@ -147,7 +147,50 @@ app.get("/user-data", (req, res) => {
   }
 });
 
-// start server 
+// route to insert a log for the current logged in user
+app.post("/insert-log", async (req, res) => {
+  try {
+    if (req.body) {
+      const userData = req.body.userData ? req.body.userData : "";
+
+      if (!userData) {
+        return res.status(401).send("Invalid user data");
+      }
+
+      // parse all data and set default values if necessary
+      const parseData = JSON.parse(userData);
+      const userEmail = parseData.email;
+      const mediaName = req.body.nameQuery ? req.body.nameQuery : "";
+      const mediaImage = req.body.imageQuery ? req.body.imageQuery : "";
+      const mediaCategory = req.body.category ? req.body.category : "";
+      const mediaDate = req.body.data ? req.body.data : "";
+
+      // create payload
+      const logData = {
+        userEmail,
+        mediaName,
+        mediaImage,
+        mediaCategory,
+        mediaDate,
+      };
+
+      // attempt to insert log into the user's database
+      const response = await DB.InsertLog(logData);
+
+      if (!response) {
+        return res.status(401).send("Failed to insert Log");
+      }
+
+      res.status(200).send("Log inserted successfully.");
+    } else {
+      res.status(400).send("Invalid request data");
+    }
+  } catch (error) {
+    res.status(500).send("Server error: " + error.message);
+  }
+});
+
+// start server
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
