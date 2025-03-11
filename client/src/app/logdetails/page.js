@@ -16,8 +16,6 @@ export default function LogDetailsPage() {
     () => new Date().toISOString().split("T")[0]
   );
   const [category, setCategory] = useState(""); // Default category
-  const [liked, setLiked] = useState(false);
-  const [review, setReview] = useState("");
   const [wasLogSaved, setWasLogSaved] = useState(true);
   const [isLoading, setIsLoading] = useState(false); // state to hold login processing
 
@@ -34,7 +32,7 @@ export default function LogDetailsPage() {
     setCategory(mappedCategory);
   }, [categoryQuery]);
 
-  // push the client side log data to the server and save in DB
+  // push the client-side log data to the server and save in DB
   const handleSave = async (e) => {
     e.preventDefault();
 
@@ -138,30 +136,7 @@ export default function LogDetailsPage() {
               <option value="Podcast">Podcast</option>
               <option value="Audiobook">Audiobook</option>
             </select>
-
-            {/* Like Button (Smaller & Centered) */}
-            <div className="flex justify-center mt-4">
-              <button
-                className={`px-3 py-1 rounded-md text-sm font-semibold transition ${
-                  liked ? "bg-red-500 text-white" : "bg-gray-300 text-gray-700"
-                }`}
-                onClick={() => setLiked(!liked)}
-              >
-                {liked ? "♥ Liked" : "♡ Like"}
-              </button>
-            </div>
           </div>
-        </div>
-
-        {/* Review Section */}
-        <div className="mt-6">
-          <label className="text-[#2D5C7C] font-medium">Add a Review:</label>
-          <textarea
-            value={review}
-            onChange={(e) => setReview(e.target.value)}
-            placeholder="Write your review..."
-            className="w-full p-3 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#2D5C7C] h-28"
-          ></textarea>
         </div>
 
         {!wasLogSaved ? (
@@ -170,9 +145,7 @@ export default function LogDetailsPage() {
               ERROR: Something went wrong trying to save your log.
             </p>
           </div>
-        ) : (
-          ""
-        )}
+        ) : null}
 
         {/* Save Button */}
         <div className="mt-6 flex justify-end">
