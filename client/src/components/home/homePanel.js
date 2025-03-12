@@ -1,28 +1,5 @@
 import { useState, useEffect } from "react";
 
-const artists = [
-  {
-    id: 1,
-    name: "Taylor Swift",
-    img: "https://i.scdn.co/image/ab6761610000e5ebe672b5f553298dcdccb0e676",
-  },
-  {
-    id: 2,
-    name: "Lady Gaga",
-    img: "https://i.scdn.co/image/ab6761610000e5ebaadc18cac8d48124357c38e6",
-  },
-  {
-    id: 3,
-    name: "Ariana Grande",
-    img: "https://i.scdn.co/image/ab6761610000e5eb40b5c07ab77b6b1a9075fdc0",
-  },
-  {
-    id: 4,
-    name: "Bruno Mars",
-    img: "https://i.scdn.co/image/ab6761610000e5ebc36dd9eb55fb0db4911f25dd",
-  },
-];
-
 export default function HomePanel() {
   const [recentMusic, setRecentMusic] = useState([]);
   const [recentPodcasts, setRecentPodcasts] = useState([]);
