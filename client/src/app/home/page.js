@@ -8,7 +8,7 @@ import { useState } from "react";
 import NavBar from "@/components/navbar/navbar";
 
 // Category Buttons
-const category = ["All", "Music", "Podcasts", "Audiobooks"];
+const category = ["All", "Music", "Podcast", "Audiobook"];
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("All"); // for updating the category in the content grid
