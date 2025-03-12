@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
 
+// Shuffle the contents every time the page loads (using Fisher-Yates shuffle algorithm)
+const shuffleArray = (array) => {
+  let shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+};
+
 export default function ContentGrid({ selectedCategory }) {
   const [logs, setLogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,8 +58,11 @@ export default function ContentGrid({ selectedCategory }) {
     (item) => selectedCategory === "All" || item.category === selectedCategory
   );
 
+  // Shuffle the filtered data
+  const shuffledData = shuffleArray(filteredData);
+
   // Limit the content to maximum of 6 items
-  const displayedData = filteredData.slice(0, 6);
+  const displayedData = shuffledData.slice(0, 6);
 
   return (
     <div className="bg-[#2d5c7c] p-12 pt-0 grid grid-cols-3 gap-x-12 gap-y-6">
