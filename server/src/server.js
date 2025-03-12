@@ -118,6 +118,52 @@ app.post("/submit-preferences", async (req, res) => {
   }
 });
 
+// route to fetch user's log entries
+app.get("/user-logs", (req, res) => {
+  if (req.body) {
+    const authHeader = req.headers["authorization"];
+
+    // check if the Authorization header exists
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      const token = authHeader.split(" ")[1]; // extract token from "Bearer <token>"
+
+      // verify the token
+      jwt.verify(
+        token,
+        "bBGIn68xpGu0k1LP0HFleWEculQqZEmK23ZGNGjYegA",
+        async (err, decoded) => {
+          if (err) {
+            return res
+              .status(403)
+              .json({ message: "Token is invalid or expired" });
+          }
+
+          // if token is valid, decoded contains the user data
+          const userData = decoded;
+
+          if (!userData) {
+            return res.status(401).send("Invalid user data");
+          }
+
+          const response = await DB.GetUserLogs(userData.email);
+
+          if (response == false) {
+            return res
+              .status(401)
+              .send(`Failed to fetch logs for ${userData.email}`);
+          }
+
+          res.status(200).json({ response });
+        }
+      );
+    } else {
+      res.status(401).json({ message: "Invalid token data" });
+    }
+  } else {
+    res.status(401).json({ message: "Invalid request data" });
+  }
+});
+
 // route to fetch current [logged in] user's information
 app.get("/user-data", (req, res) => {
   const authHeader = req.headers["authorization"];

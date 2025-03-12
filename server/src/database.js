@@ -140,10 +140,30 @@ const InsertLog = async (logData) => {
   }
 };
 
+// function to fetch user logs and return them
+const GetUserLogs = async (userEmail) => {
+  try {
+    await ConnectDB(); // establish connection
+
+    const user = await Log.findOne({ userEmail: userEmail });
+    
+    // if there is a match
+    if (user) {
+      return user.data;
+    }
+    // otherwise return error
+    console.log(`Couldn't find a user with ${userEmail} to fetch logs.`);
+  } catch (error) {
+    console.log("Error fetching user logs:", error.message);
+  }
+  return false;
+};
+
 module.exports = {
   ConnectDB,
   InsertUser,
   VerifyUser,
   InsertPreferences,
   InsertLog,
+  GetUserLogs,
 };
