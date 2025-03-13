@@ -71,56 +71,68 @@ export default function HomePanel() {
         {/* Top Artist */}
         <div className="bg-[#2d5c7c] p-4 rounded-lg text-center flex-1">
           <h2 className="text-white font-bold mb-4 text-xl">Recent Music</h2>
-          {recentMusic.map((item) => (
-            <div
-              key={item._id}
-              className="flex items-center bg-white pl-0 px-3 py-2 rounded-lg mb-3 w-4/5 h-14 mx-auto"
-            >
-              <img
-                src={item.mediaImage}
-                alt={item.mediaName}
-                className="w-14 h-14 rounded"
-              />
-              <h3 className="pl-4">{item.mediaName}</h3>
-            </div>
-          ))}
+          {recentMusic.length > 0 ? (
+            recentMusic.map((item) => (
+              <div
+                key={item._id}
+                className="flex items-center bg-white pl-0 px-3 py-2 rounded-lg mb-3 w-4/5 h-14 mx-auto"
+              >
+                <img
+                  src={item.mediaImage}
+                  alt={item.mediaName}
+                  className="w-14 h-14 rounded"
+                />
+                <h3 className="pl-4">{item.mediaName}</h3>
+              </div>
+            ))
+          ) : (
+            <p className="text-white">No items available</p>
+          )}
         </div>
 
         {/* Recent Podcasts */}
         <div className="bg-[#2d5c7c] p-4 rounded-lg text-center flex-1">
           <h2 className="text-white font-bold mb-4 text-xl">Recent Podcasts</h2>
-          {recentPodcasts.map((item) => (
-            <div
-              key={item._id}
-              className="flex items-center bg-white pl-0 px-3 py-2 rounded-lg mb-3 w-4/5 h-14 mx-auto"
-            >
-              <img
-                src={item.mediaImage}
-                alt={item.mediaName}
-                className="w-14 h-14 rounded"
-              />
-              <h3 className="pl-4">{item.mediaName}</h3>
-            </div>
-          ))}
+          {recentPodcasts.length > 0 ? (
+            recentPodcasts.map((item) => (
+              <div
+                key={item._id}
+                className="flex items-center bg-white pl-0 px-3 py-2 rounded-lg mb-3 w-4/5 h-14 mx-auto"
+              >
+                <img
+                  src={item.mediaImage}
+                  alt={item.mediaName}
+                  className="w-14 h-14 rounded"
+                />
+                <h3 className="pl-4">{item.mediaName}</h3>
+              </div>
+            ))
+          ) : (
+            <p className="text-white">No items available</p>
+          )}
         </div>
       </div>
 
       {/* Right Section - Recent Audiobooks */}
       <div className="w-3/6 bg-[#2d5c7c] p-4 rounded-lg text-center flex-1">
         <h2 className="text-white font-bold mb-5 text-xl">Recent Audiobooks</h2>
-        {recentAudiobooks.map((item) => (
-          <div
-            key={item._id}
-            className="bg-white h-20 pl-0 p-3 rounded-lg mb-5 flex items-center"
-          >
-            <img
-              src={item.mediaImage}
-              alt={item.mediaName}
-              className="w-20 h-20 rounded"
-            />
-            <h3 className="pl-4 text-left break-words">{item.mediaName}</h3>
-          </div>
-        ))}
+        {recentAudiobooks.length > 0 ? (
+          recentAudiobooks.map((item) => (
+            <div
+              key={item._id}
+              className="bg-white h-20 pl-0 p-3 rounded-lg mb-5 flex items-center"
+            >
+              <img
+                src={item.mediaImage}
+                alt={item.mediaName}
+                className="w-20 h-20 rounded"
+              />
+              <h3 className="pl-4 text-left break-words">{item.mediaName}</h3>
+            </div>
+          ))
+        ) : (
+          <p className="text-white">No items available</p>
+        )}
       </div>
     </div>
   );

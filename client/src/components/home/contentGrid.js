@@ -40,11 +40,11 @@ export default function ContentGrid({ selectedCategory }) {
             }));
             setLogs(formattedLogs);
           } else {
-            console.error("Failed to fetch logs");
+            console.log("Failed to fetch logs");
           }
         }
       } catch (error) {
-        console.error("Error fetching logs: ", error);
+        console.log("Error fetching logs: ", error);
       } finally {
         setIsLoading(false);
       }
