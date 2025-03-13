@@ -37,6 +37,7 @@ export default function Home() {
       );
       const data = await response.json();
       setAccessToken(data.access_token); // Save the access token
+      sessionStorage.setItem("access-token", data.access_token);
     };
 
     fetchAccessToken();

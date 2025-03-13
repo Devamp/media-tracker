@@ -17,6 +17,7 @@ export default function LogTablePage() {
   const [logs, setLogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState("All");
+  const access_token = sessionStorage.getItem("access-token");
 
   // Filter logs based on selected category
   const filteredLogs = logs.filter(
@@ -79,7 +80,7 @@ export default function LogTablePage() {
   return (
     <div className="flex flex-col items-center w-full min-h-screen bg-[#2D5C7C]">
       {/* Navbar */}
-      <NavBar />
+      <NavBar accessToken={access_token} />
 
       {/* Filter Buttons */}
       <div className="flex space-x-4 mt-24">

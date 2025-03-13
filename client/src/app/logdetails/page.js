@@ -18,6 +18,8 @@ export default function LogDetailsPage() {
   const [category, setCategory] = useState(""); // Default category
   const [wasLogSaved, setWasLogSaved] = useState(true);
   const [isLoading, setIsLoading] = useState(false); // state to hold login processing
+  const access_token = sessionStorage.getItem("access-token");
+
 
   // Map query values to category values
   const categoryMapping = {
@@ -85,7 +87,7 @@ export default function LogDetailsPage() {
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen bg-[#2D5C7C]">
       {/* NavBar */}
-      <NavBar />
+      <NavBar accessToken={access_token}/>
 
       {/* Main Container */}
       <div className="bg-gray-200 p-8 rounded-lg mt-10 w-3/4 shadow-md">
