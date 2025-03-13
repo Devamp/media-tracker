@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 
-const genres = ["pop", "classical", "rock", "R&B"]; // Your list of genres
-
 const MadeForYou = ({ accessToken }) => {
   const [musicPreferences, setMusicPreferences] = useState([]);
   const [genreIndex, setGenreIndex] = useState(0); // Track the current genre index
@@ -163,11 +161,11 @@ const MadeForYou = ({ accessToken }) => {
           onClick={nextItems}
           disabled={
             startIndex + itemsPerPage >= tracks.length &&
-            genreIndex === genres.length - 1
+            genreIndex === musicPreferences.length - 1
           }
           className={`absolute right-[-25px] bg-[#2d5c7c] text-white w-12 h-12 flex items-center justify-center rounded-full shadow-md ${
             startIndex + itemsPerPage >= tracks.length &&
-            genreIndex === genres.length - 1
+            genreIndex === musicPreferences.length - 1
               ? "opacity-50 cursor-not-allowed"
               : "hover:bg-[#1e4b6a]"
           }`}
