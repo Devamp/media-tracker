@@ -236,6 +236,50 @@ app.post("/insert-log", async (req, res) => {
   }
 });
 
+// route to get the music preferences of a logged-in user
+app.get("/music-preferences", (req, res) => {
+  const authHeader = req.headers["authorization"];
+
+  // Check if the Authorization header exists
+  if (authHeader && authHeader.startsWith("Bearer ")) {
+    const token = authHeader.split(" ")[1]; // Extract token from "Bearer <token>"
+
+    // Verify the token
+    jwt.verify(
+      token,
+      "bBGIn68xpGu0k1LP0HFleWEculQqZEmK23ZGNGjYegA",
+      async (err, decoded) => {
+        if (err) {
+          return res
+            .status(403)
+            .json({ message: "Token is invalid or expired" });
+        }
+
+        // If the token is valid, decoded contains the user data
+        const userData = decoded;
+
+        if (!userData) {
+          return res.status(401).send("Invalid user data");
+        }
+
+        // Query the database to get the user's music preferences
+        const response = await DB.GetUserPreferences(userData.email);
+
+        if (!response) {
+          return res
+            .status(401)
+            .send(`Failed to fetch preferences for ${userData.email}`);
+        }
+
+        // Send the music preferences as the response
+        res.status(200).json({ musicPreferences: response.musicPreferences });
+      }
+    );
+  } else {
+    res.status(401).json({ message: "Authorization token not provided" });
+  }
+});
+
 // start server
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
