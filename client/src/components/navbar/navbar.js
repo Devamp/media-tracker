@@ -118,13 +118,13 @@ export default function NavBar({ accessToken }) {
           </MenuItem>
 
           {/* Logout */}
-          <MenuItem>
-            <span className="block hover:bg-gray-100 cursor-pointer px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden">
-              <Link href="/login" onClick={handleLogout}>
+          <Link href="/login" onClick={handleLogout}>
+            <MenuItem>
+              <span className="block hover:bg-gray-100 cursor-pointer px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden">
                 Logout
-              </Link>
-            </span>
-          </MenuItem>
+              </span>
+            </MenuItem>
+          </Link>
         </MenuItems>
       </Menu>
     </nav>
