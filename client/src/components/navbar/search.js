@@ -2,43 +2,12 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-// Spotify API's ID and SECRET
-const CLIENT_ID = "ee5e278a45544efd850a529f892bc1ed";
-const CLIENT_SECRET = "a2690b3b58494987bf062fca1e06b0b1";
-
 // Search Bar
-const SearchBar = () => {
-  const [accessToken, setAccessToken] = useState(""); // Store access token for Spotify API
-
+const SearchBar = ({ accessToken }) => {
   const [searchTerm, setSearchTerm] = useState(""); // Store user input from the search bar
   const [isDropdownVisible, setDropdownVisible] = useState(false); // State to control dropdown visibility
   const [loading, setLoading] = useState(false); // Loading state to show "Loading..." when fetching data
   const [searchResults, setSearchResults] = useState([]); // Store search results
-
-  // Fetch Spotify API Access Token when the component mounts -----
-  useEffect(() => {
-    const fetchAccessToken = async () => {
-      // API Access Token
-      const authParameters = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: `grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`,
-      };
-
-      // Request an access token from Spotify
-      const response = await fetch(
-        "https://accounts.spotify.com/api/token",
-        authParameters
-      );
-      const data = await response.json();
-      setAccessToken(data.access_token); // Save the access token
-    };
-
-    fetchAccessToken();
-  }, []);
-  // -----------------------------------------
 
   // Debounced search function to fetch results as the user types
   useEffect(() => {

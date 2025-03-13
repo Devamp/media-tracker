@@ -19,7 +19,7 @@ const navigation = [
   },
 ];
 
-export default function NavBar() {
+export default function NavBar({ accessToken }) {
   const [user, setUser] = useState({}); // store current user state
   const router = useRouter();
 
@@ -89,7 +89,7 @@ export default function NavBar() {
       </div>
 
       {/* Search Bar */}
-      <SearchBar />
+      <SearchBar accessToken={accessToken} />
 
       {/* Profile Dropdown */}
       <Menu as="div" className="relative ml-3">
