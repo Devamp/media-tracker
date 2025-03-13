@@ -1,120 +1,78 @@
-const music = [
-  {
-    id: "m1",
-    name: "APT.",
-    img: "https://i.scdn.co/image/ab67616d0000b27336032cb4acd9df050bc2e197",
-  },
-  {
-    id: "m2",
-    name: "we can't be friends (wait for your love)",
-    img: "https://i.scdn.co/image/ab67616d0000b2738b58d20f1b77295730db15b4",
-  },
-  {
-    id: "m3",
-    name: "Die With A Smile",
-    img: "https://i.scdn.co/image/ab67616d0000b27382ea2e9e1858aa012c57cd45",
-  },
-  {
-    id: "m4",
-    name: "Anti-Hero",
-    img: "https://i.scdn.co/image/ab67616d0000b273bb54dde68cd23e2a268ae0f5",
-  },
-  {
-    id: "m5",
-    name: "Anti-Hero",
-    img: "https://i.scdn.co/image/ab67616d0000b273bb54dde68cd23e2a268ae0f5",
-  },
-  {
-    id: "m6",
-    name: "Anti-Hero",
-    img: "https://i.scdn.co/image/ab67616d0000b273bb54dde68cd23e2a268ae0f5",
-  },
-];
+import { useEffect, useState } from "react";
 
-const podcast = [
-  {
-    id: "p1",
-    name: "TED Talks Daily",
-    img: "https://i.scdn.co/image/ab6765630000ba8a1eef8dcabec3dca77ace07c8",
-  },
-  {
-    id: "p2",
-    name: "Learning Easy English",
-    img: "https://i.scdn.co/image/ab6765630000ba8a5ddbeecc590a066fd7dbb27b",
-  },
-  {
-    id: "p3",
-    name: "Learning English Conversations",
-    img: "https://i.scdn.co/image/ab6765630000ba8a947e831094641e0163c74535",
-  },
-  {
-    id: "p4",
-    name: "Better Version",
-    img: "https://i.scdn.co/image/ab6765630000ba8a33e903d1f9adb0a2f087c5e0",
-  },
-  {
-    id: "p5",
-    name: "Better Version",
-    img: "https://i.scdn.co/image/ab6765630000ba8a33e903d1f9adb0a2f087c5e0",
-  },
-  {
-    id: "p6",
-    name: "Better Version",
-    img: "https://i.scdn.co/image/ab6765630000ba8a33e903d1f9adb0a2f087c5e0",
-  },
-];
-
-const audiobook = [
-  {
-    id: "a1",
-    name: "Atomic Habits (James Clear)",
-    img: "https://i.scdn.co/image/ab6765630000ba8a9ed8fa6c5d3681b214776bf3",
-  },
-  {
-    id: "a2",
-    name: "Thinking, Fast & Slow (Daniel Kahneman)",
-    img: "https://i.scdn.co/image/ab6765630000ba8a822fec292cf7237ecfb8437c",
-  },
-  {
-    id: "a3",
-    name: "12 Rules for Life (Jordan B. Peterson)",
-    img: "https://i.scdn.co/image/ab6765630000ba8afada17ad64aae7c4ecb9cf39",
-  },
-  {
-    id: "a4",
-    name: "Deep Work (Cal Newport)",
-    img: "https://i.scdn.co/image/ab6765630000ba8abbdbf539dc876b0f5e964e9d",
-  },
-  {
-    id: "a5",
-    name: "Deep Work (Cal Newport)",
-    img: "https://i.scdn.co/image/ab6765630000ba8abbdbf539dc876b0f5e964e9d",
-  },
-  {
-    id: "a6",
-    name: "Deep Work (Cal Newport)",
-    img: "https://i.scdn.co/image/ab6765630000ba8abbdbf539dc876b0f5e964e9d",
-  },
-];
+// Shuffle the contents every time the page loads (using Fisher-Yates shuffle algorithm)
+const shuffleArray = (array) => {
+  let shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+};
 
 export default function ContentGrid({ selectedCategory }) {
-  // Determine which category to display
-  const categoryData =
-    selectedCategory === "Music"
-      ? music
-      : selectedCategory === "Podcasts"
-      ? podcast
-      : selectedCategory === "Audiobooks"
-      ? audiobook
-      : selectedCategory === "All"
-      ? [...music.slice(0, 2), ...podcast.slice(0, 2), ...audiobook.slice(0, 2)]    // Get first 2 items from each category
-      : [];
+  const [logs, setLogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch data from the database
+  useEffect(() => {
+    const fetchLogs = async () => {
+      const token = sessionStorage.getItem("token");
+
+      try {
+        if (token) {
+          const res = await fetch("http://localhost:5001/user-logs", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          });
+
+          // Handle response
+          if (res.ok) {
+            const data = await res.json();
+            const formattedLogs = data.response.map((log) => ({
+              id: log._id,
+              name: log.mediaName,
+              img: log.mediaImage,
+              category: log.mediaCategory,
+            }));
+            setLogs(formattedLogs);
+          } else {
+            console.log("Failed to fetch logs");
+          }
+        }
+      } catch (error) {
+        console.log("Error fetching logs: ", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchLogs();
+  }, []);
+
+  // Filter the data based on the selected category
+  const filteredData = logs.filter(
+    (item) => selectedCategory === "All" || item.category === selectedCategory
+  );
+
+  // Shuffle the filtered data
+  const shuffledData = shuffleArray(filteredData);
+
+  // Limit the content to maximum of 6 items
+  const displayedData = shuffledData.slice(0, 6);
 
   return (
     <div className="bg-[#2d5c7c] p-12 pt-0 grid grid-cols-3 gap-x-12 gap-y-6">
       {/* Render the selected category's content, show message if no items are available */}
-      {categoryData.length > 0 ? (
-        categoryData.map((item) => (
+      {isLoading ? (
+        <div className="col-span-3 text-white text-center font-medium">
+          Loading content...
+        </div>
+      ) : displayedData.length > 0 ? (
+        displayedData.map((item) => (
           <div
             key={item.id}
             className="bg-white rounded-lg h-28 pl-0 p-4 flex items-center"
@@ -124,7 +82,9 @@ export default function ContentGrid({ selectedCategory }) {
               alt={item.name}
               className="w-28 h-28 rounded-lg"
             />
-            <h3 className="font-medium flex justify-center pl-4">{item.name}</h3>
+            <h3 className="font-medium flex justify-center pl-4">
+              {item.name}
+            </h3>
           </div>
         ))
       ) : (

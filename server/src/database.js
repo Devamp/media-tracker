@@ -146,7 +146,7 @@ const GetUserLogs = async (userEmail) => {
     await ConnectDB(); // establish connection
 
     const user = await Log.findOne({ userEmail: userEmail });
-    
+
     // if there is a match
     if (user) {
       return user.data;
@@ -159,6 +159,32 @@ const GetUserLogs = async (userEmail) => {
   return false;
 };
 
+// function to get user preferences from the database
+const GetUserPreferences = async (userEmail) => {
+  try {
+    await ConnectDB(); // establish connection
+
+    // Find the user based on the email
+    const user = await User.findOne({ email: userEmail });
+
+    // If the user exists, return the preferences
+    if (user) {
+      return {
+        musicPreferences: user.musicPreferences,
+        audiobookPreferences: user.audiobookPreferences,
+        podcastPreferences: user.podcastPreferences,
+      };
+    }
+
+    // If no user is found
+    console.log(`No user found with email ${userEmail}`);
+    return false;
+  } catch (error) {
+    console.log("Error fetching user preferences:", error.message);
+    return false;
+  }
+};
+
 module.exports = {
   ConnectDB,
   InsertUser,
@@ -166,4 +192,5 @@ module.exports = {
   InsertPreferences,
   InsertLog,
   GetUserLogs,
+  GetUserPreferences,
 };

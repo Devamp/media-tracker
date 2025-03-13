@@ -19,7 +19,7 @@ const navigation = [
   },
 ];
 
-export default function NavBar() {
+export default function NavBar({ accessToken }) {
   const [user, setUser] = useState({}); // store current user state
   const router = useRouter();
 
@@ -89,7 +89,7 @@ export default function NavBar() {
       </div>
 
       {/* Search Bar */}
-      <SearchBar />
+      <SearchBar accessToken={accessToken} />
 
       {/* Profile Dropdown */}
       <Menu as="div" className="relative ml-3">
@@ -118,13 +118,13 @@ export default function NavBar() {
           </MenuItem>
 
           {/* Logout */}
-          <MenuItem>
-            <span className="block hover:bg-gray-100 cursor-pointer px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden">
-              <Link href="/login" onClick={handleLogout}>
+          <Link href="/login" onClick={handleLogout}>
+            <MenuItem>
+              <span className="block hover:bg-gray-100 cursor-pointer px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden">
                 Logout
-              </Link>
-            </span>
-          </MenuItem>
+              </span>
+            </MenuItem>
+          </Link>
         </MenuItems>
       </Menu>
     </nav>
