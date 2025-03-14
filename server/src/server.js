@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const port = 5001;
+const port = 5001 || process.env.PORT;
 
 // login route to process user login and jwt token creation
 app.post("/login", async (req, res) => {
