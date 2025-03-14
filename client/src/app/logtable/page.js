@@ -17,7 +17,14 @@ export default function LogTablePage() {
   const [logs, setLogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState("All");
-  const access_token = sessionStorage.getItem("access-token");
+  const [accessToken, setAccessToken] = useState(null);
+
+  useEffect(() => {
+    // Ensure we are running in the client-side before accessing sessionStorage
+    if (typeof window !== "undefined") {
+      setAccessToken(sessionStorage.getItem("access-token"));
+    }
+  }, []);
 
   // Filter logs based on selected category
   const filteredLogs = logs.filter(
@@ -80,7 +87,7 @@ export default function LogTablePage() {
   return (
     <div className="flex flex-col items-center w-full min-h-screen bg-[#2D5C7C]">
       {/* Navbar */}
-      <NavBar accessToken={access_token} />
+      <NavBar accessToken={accessToken} />
 
       {/* Filter Buttons */}
       <div className="flex space-x-4 mt-24">

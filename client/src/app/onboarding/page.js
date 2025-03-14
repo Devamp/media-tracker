@@ -1,10 +1,10 @@
 "use client";
 
 import MusicPref from "./music/page";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function Home() {
+function OnboardingContent() {
   const searchParams = useSearchParams();
   const [userEmail, setUserEmail] = useState("");
 
@@ -12,11 +12,19 @@ export default function Home() {
     if (searchParams.has("email")) {
       setUserEmail(searchParams.get("email"));
     }
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
       <MusicPref userEmail={userEmail} /> {}
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <OnboardingContent />
+    </Suspense>
   );
 }

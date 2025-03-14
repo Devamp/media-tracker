@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function PodcastInterests() {
+function PodcastInterestsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [selected, setSelected] = useState([]);
@@ -157,5 +157,13 @@ export default function PodcastInterests() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function PodcastInterests() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PodcastInterestsContent />
+    </Suspense>
   );
 }
