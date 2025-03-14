@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import NavBar from "@/components/navbar/navbar";
 import { Loader2 } from "lucide-react";
 
-export default function LogDetailsPage() {
+function LogDetailsContent() {
   const searchParams = useSearchParams();
   const nameQuery = searchParams.get("name") || "Unknown";
   const categoryQuery = searchParams.get("category") || "track";
@@ -173,5 +173,13 @@ export default function LogDetailsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LogDetailsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LogDetailsContent />
+    </Suspense>
   );
 }
