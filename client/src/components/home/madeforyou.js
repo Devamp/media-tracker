@@ -16,7 +16,7 @@ const MadeForYou = ({ accessToken }) => {
 
       try {
         if (token) {
-          const res = await fetch("http://localhost:5001/music-preferences", {
+          const res = await fetch("https://media-tracker-srve.onrender.com/music-preferences", {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,

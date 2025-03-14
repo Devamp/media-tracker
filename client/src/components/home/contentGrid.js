@@ -21,7 +21,7 @@ export default function ContentGrid({ selectedCategory }) {
 
       try {
         if (token) {
-          const res = await fetch("http://localhost:5001/user-logs", {
+          const res = await fetch("https://media-tracker-srve.onrender.com/user-logs", {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,

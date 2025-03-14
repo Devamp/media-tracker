@@ -36,13 +36,16 @@ export default function NavBar({ accessToken }) {
       const token = sessionStorage.getItem("token"); // get the token from sessionStorage
 
       try {
-        const res = await fetch("http://localhost:5001/user-data", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`, // send the token in the Authorization header
-            "Content-Type": "application/json",
-          },
-        });
+        const res = await fetch(
+          "https://media-tracker-srve.onrender.com/user-data",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`, // send the token in the Authorization header
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         // if error, reset to login page
         if (res.status === 401 || res.status === 403) {
