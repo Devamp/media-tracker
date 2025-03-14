@@ -55,7 +55,7 @@ function LogDetailsContent() {
     };
 
     try {
-      const res = await fetch("http://localhost:5001/insert-log", {
+      const res = await fetch("https://media-tracker-srve.onrender.com/insert-log", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

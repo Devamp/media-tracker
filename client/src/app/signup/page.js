@@ -52,13 +52,16 @@ export default function SignUp() {
     };
 
     try {
-      const res = await fetch("http://localhost:5001/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(signupData),
-      });
+      const res = await fetch(
+        "https://media-tracker-srve.onrender.com/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(signupData),
+        }
+      );
 
       if (res.ok) {
         setTimeout(() => {

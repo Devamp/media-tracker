@@ -25,7 +25,7 @@ const LoginBody = ({ setWasLoginSuccessful }) => {
     };
 
     try {
-      const res = await fetch("http://localhost:5001/login", {
+      const res = await fetch("https://media-tracker-srve.onrender.com/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

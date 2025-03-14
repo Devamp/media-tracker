@@ -69,7 +69,7 @@ function PodcastInterestsContent() {
       podcastPreferences: selected,
     };
 
-    fetch("http://localhost:5001/submit-preferences", {
+    fetch("https://media-tracker-srve.onrender.com/submit-preferences", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
