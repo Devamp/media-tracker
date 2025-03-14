@@ -5,7 +5,13 @@ const jwt = require("jsonwebtoken");
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: "https://media-tracker-ten.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const port = 5001 || process.env.PORT;
