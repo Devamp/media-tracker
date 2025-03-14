@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const User = require("./models/user");
+const User = require("./models/User");
 const Log = require("./models/Log");
 
 // function to establish connection to MongoDB
