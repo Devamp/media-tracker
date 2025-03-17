@@ -63,10 +63,14 @@ const LoginBody = ({ setWasLoginSuccessful }) => {
     >
       <div className="flex flex-row items-center justify-center w-full p-2 rounded-md">
         <Mail className="mr-2 text-black" size={28} />
+        <label htmlFor="email" className="sr-only">
+          Email:
+        </label>
         <input
           className="p-2 flex-1 rounded-md hover:border-black focus:outline-none"
           placeholder="Your Email"
           name="user-email"
+          id="email"
           type="email"
           required
         />
@@ -74,10 +78,14 @@ const LoginBody = ({ setWasLoginSuccessful }) => {
 
       <div className="flex flex-row items-center w-full p-2 rounded-md mb-4">
         <Lock className="mr-2 text-black" size={28} />
+        <label htmlFor="password" className="sr-only">
+          Password:
+        </label>
         <input
           className="p-2 flex-1 rounded-md hover:border-black focus:outline-none"
           placeholder="Password"
           name="user-password"
+          id="password"
           type="password"
           required
         />

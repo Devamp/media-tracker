@@ -100,10 +100,14 @@ export default function SignUp() {
         >
           <div className="flex flex-row items-center w-full p-2 rounded-md">
             <User className="mr-2 text-black" size={28} />
+            <label htmlFor="username-element" className="sr-only">
+              Username:
+            </label>
             <input
               className="p-2 flex-1 rounded-md hover:border-black focus:outline-none"
               placeholder="Username"
               name="username"
+              id="username-element"
               type="text"
               required
               value={username}
@@ -113,10 +117,14 @@ export default function SignUp() {
 
           <div className="flex flex-row items-center justify-center w-full p-2 rounded-md">
             <Mail className="mr-2 text-black" size={28} />
+            <label htmlFor="email" className="sr-only">
+              Email:
+            </label>
             <input
               className="p-2 flex-1 rounded-md hover:border-black focus:outline-none"
               placeholder="Your Email"
               name="user-email"
+              id="email"
               type="email"
               required
               value={email}
@@ -126,10 +134,14 @@ export default function SignUp() {
 
           <div className="flex flex-row items-center w-full p-2 rounded-md">
             <Key className="mr-2 text-black" size={28} />
+            <label htmlFor="password" className="sr-only">
+              Password:
+            </label>
             <input
               className="p-2 flex-1 rounded-md hover:border-black focus:outline-none"
               placeholder="Password"
               name="user-password"
+              id="password"
               type="password"
               required
               value={password}
@@ -142,11 +154,15 @@ export default function SignUp() {
 
           <div className="flex flex-row items-center w-full p-2 rounded-md mb-4">
             <Key className="mr-2 text-black" size={28} />
+            <label htmlFor="confirm-password" className="sr-only">
+              Confirm Password:
+            </label>
             <input
               className="p-2 flex-1 rounded-md hover:border-black focus:outline-none"
               placeholder="Confirm Password"
               type="password"
               name="user-confirm-password"
+              id="confirm-password"
               required
               value={confirmPassword}
               onChange={confirmPasswordMatch}

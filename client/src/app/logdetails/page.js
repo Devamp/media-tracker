@@ -20,7 +20,6 @@ function LogDetailsContent() {
   const [isLoading, setIsLoading] = useState(false); // state to hold login processing
   const access_token = sessionStorage.getItem("access-token");
 
-
   // Map query values to category values
   const categoryMapping = {
     track: "Music",
@@ -55,13 +54,16 @@ function LogDetailsContent() {
     };
 
     try {
-      const res = await fetch("https://media-tracker-srve.onrender.com/insert-log", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(logEntry),
-      });
+      const res = await fetch(
+        "https://media-tracker-srve.onrender.com/insert-log",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(logEntry),
+        }
+      );
 
       // error handling
       if (res.status === 401 || res.status === 403) {
@@ -87,7 +89,7 @@ function LogDetailsContent() {
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen bg-[#2D5C7C]">
       {/* NavBar */}
-      <NavBar accessToken={access_token}/>
+      <NavBar accessToken={access_token} />
 
       {/* Main Container */}
       <div className="bg-gray-200 p-8 rounded-lg mt-10 w-3/4 shadow-md">
@@ -119,18 +121,24 @@ function LogDetailsContent() {
           {/* Details Section */}
           <div className="flex flex-col space-y-3 w-full">
             {/* Date Selection */}
-            <label className="text-[#2D5C7C] font-medium">Date:</label>
+            <label htmlFor="media-date" className="text-[#2D5C7C] font-medium">
+              Date:
+            </label>
             <input
               type="date"
+              id="media-date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
               className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#2D5C7C]"
             />
 
             {/* Category Selection */}
-            <label className="text-[#2D5C7C] font-medium">Category:</label>
+            <label htmlFor="selector" className="text-[#2D5C7C] font-medium">
+              Category:
+            </label>
             <select
               value={category}
+              id="selector"
               onChange={(e) => setCategory(e.target.value)}
               className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#2D5C7C]"
             >
